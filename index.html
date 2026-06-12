@@ -6,117 +6,104 @@
 <title>My Space</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-:root {
-  --bg:#fff; --text:#1d1d1f; --text2:#86868b; --accent:#0071e3;
-  --card:#fbfbfd; --border:#d2d2d7; --nav-bg:rgba(255,255,255,0.72);
-  --shadow:0 2px 12px rgba(0,0,0,0.08); --radius:18px; --radius-sm:12px;
-  --trans:0.3s cubic-bezier(0.25,0.1,0.25,1);
-}
+:root{--bg:#fff;--text:#1d1d1f;--text2:#86868b;--accent:#0071e3;--card:#fbfbfd;--border:#d2d2d7;--nav-bg:rgba(255,255,255,0.72);--shadow:0 2px 12px rgba(0,0,0,0.08);--radius:18px;--radius-sm:12px;--trans:0.3s cubic-bezier(0.25,0.1,0.25,1)}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;font-size:17px}
 body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,0.08);height:52px;display:flex;align-items:center;justify-content:center}
-nav a{color:var(--text2);text-decoration:none;font-size:0.82rem;margin:0 1.4rem;letter-spacing:0.02em;transition:color var(--trans)}
-nav a:hover,nav a.active{color:var(--accent)}
-.nav-title{font-weight:600;color:var(--text);margin-right:2rem;font-size:0.95rem}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--nav-bg);backdrop-filter:saturate(180%)blur(20px);-webkit-backdrop-filter:saturate(180%)blur(20px);border-bottom:1px solid rgba(0,0,0,.08);height:52px;display:flex;align-items:center;justify-content:center}
+nav a{color:var(--text2);text-decoration:none;font-size:.82rem;margin:0 1.4rem;letter-spacing:.02em;transition:color var(--trans)}
+nav a:hover{color:var(--accent)}
+.nav-title{font-weight:600;color:var(--text);margin-right:2rem;font-size:.95rem}
 
-/* SECTIONS */
 section{padding:100px 24px;max-width:1100px;margin:0 auto}
-.sec-label{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--accent);margin-bottom:8px;font-weight:600}
-.sec-title{font-size:3rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:16px;line-height:1.15}
+.sec-label{font-size:.8rem;text-transform:uppercase;letter-spacing:.15em;color:var(--accent);margin-bottom:8px;font-weight:600}
+.sec-title{font-size:2.8rem;font-weight:700;letter-spacing:-.02em;margin-bottom:16px;line-height:1.15}
 .sec-desc{font-size:1.1rem;color:var(--text2);max-width:600px;line-height:1.6;margin-bottom:40px}
 
-/* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:80px;background:linear-gradient(180deg,#f5f5f7,#fff 60%);max-width:none}
-.hero h1{font-size:clamp(2.8rem,8vw,5rem);font-weight:700;letter-spacing:-0.03em;line-height:1.05}
+.hero h1{font-size:clamp(2.8rem,8vw,5rem);font-weight:700;letter-spacing:-.03em;line-height:1.05}
 .hero p{font-size:1.3rem;color:var(--text2);margin-top:1rem;max-width:500px}
-.btn{display:inline-block;padding:14px 32px;border-radius:28px;font-size:0.95rem;font-weight:500;text-decoration:none;transition:all var(--trans);cursor:pointer;border:none;font-family:inherit}
-.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#0077ed;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,113,227,0.3)}
+.btn{display:inline-block;padding:14px 32px;border-radius:28px;font-size:.95rem;font-weight:500;text-decoration:none;transition:all var(--trans);cursor:pointer;border:none;font-family:inherit}
+.btn-primary{background:var(--accent);color:#fff}.btn-primary:hover{background:#0077ed;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,113,227,.3)}
 .btn-ghost{background:transparent;color:var(--accent);border:1.5px solid var(--accent)}.btn-ghost:hover{background:var(--accent);color:#fff}
-.btn-small{padding:8px 18px;font-size:0.82rem;border-radius:20px}
+.btn-sm{padding:8px 18px;font-size:.82rem;border-radius:20px}
 
-/* SIDEBAR LAYOUT */
 .sidebar-layout{display:flex;gap:32px;align-items:flex-start}
 .sidebar{width:200px;flex-shrink:0;position:sticky;top:80px}
-.sidebar .cat-title{font-size:0.75rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text2);margin-bottom:10px;font-weight:600}
-.sidebar .item{display:block;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:0.92rem;color:var(--text);transition:all var(--trans);margin-bottom:4px;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.sidebar .cat-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--text2);margin-bottom:10px;font-weight:600}
+.sidebar .item{display:block;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:.92rem;color:var(--text);transition:all var(--trans);margin-bottom:4px;border:none;background:none;width:100%;text-align:left;font-family:inherit}
 .sidebar .item:hover{background:#f5f5f7;color:var(--accent)}
 .sidebar .item.active{background:var(--accent);color:#fff;font-weight:500}
 .content-panel{flex:1;min-width:0}
 
-/* TOOLBAR */
 .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
-.toolbar select,.toolbar button{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:0.85rem;background:#fff;cursor:pointer;font-family:inherit;color:var(--text)}
+.toolbar select,.toolbar button{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:.85rem;background:#fff;cursor:pointer;font-family:inherit;color:var(--text)}
 .toolbar select:focus{outline:none;border-color:var(--accent)}
 .toolbar button.btn-full{background:var(--accent);color:#fff;border-color:var(--accent)}
 .toolbar button.btn-full:hover{background:#0077ed}
 
-/* GAME OVERLAY for fullscreen */
-.game-fullscreen{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
-.game-fullscreen canvas{border-radius:var(--radius-sm)}
-.game-fullscreen .fs-toolbar{display:flex;gap:10px;align-items:center}
-.game-fullscreen .fs-toolbar select,.game-fullscreen .fs-toolbar button{padding:10px 20px;border-radius:22px;border:1.5px solid rgba(255,255,255,0.3);font-size:0.9rem;background:rgba(255,255,255,0.1);color:#fff;cursor:pointer;font-family:inherit}
-.game-fullscreen .fs-toolbar select option{color:#000}
-.game-fullscreen .fs-toolbar button:hover{background:rgba(255,255,255,0.2)}
-.fs-score{color:#fff;font-size:1.2rem;font-weight:500}
-.fs-close{position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;opacity:0.7}.fs-close:hover{opacity:1}
+/* Game wrapper for fullscreen */
+.game-wrapper{position:relative}
+.game-wrapper:fullscreen,.game-wrapper:-webkit-full-screen{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:16px}
+.game-wrapper:fullscreen .fs-hide,.game-wrapper:-webkit-full-screen .fs-hide{display:none}
+.game-wrapper:fullscreen .fs-show,.game-wrapper:-webkit-full-screen .fs-show{display:flex!important}
+.fs-show{display:none!important}
+.fs-info{color:#fff;font-size:1.1rem;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center}
+.fs-exit{position:fixed;top:16px;right:24px;z-index:600;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:.9rem;display:none}
+.game-wrapper:fullscreen .fs-exit,.game-wrapper:-webkit-full-screen .fs-exit{display:block}
 
-/* Snake canvas */
-#snake-game{display:block;border-radius:var(--radius-sm);background:#1d1d1f;max-width:100%}
-.snake-info{display:flex;gap:20px;font-size:0.9rem;color:var(--text2);margin-top:12px}
+/* Snake */
+.snake-wrap canvas{display:block;border-radius:var(--radius-sm);background:#1d1d1f;max-width:100%}
+.snake-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:12px}
 
 /* Mahjong */
-.mj-grid{display:grid;gap:4px;justify-content:center;margin:0 auto}
-.mj-tile{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border-radius:8px;cursor:pointer;transition:all 0.15s;user-select:none;border:2px solid transparent}
-.mj-tile:hover{border-color:var(--accent);transform:scale(1.05)}
-.mj-tile.selected{border-color:var(--accent);background:rgba(0,113,227,0.1);transform:scale(1.08)}
+.mj-grid{display:grid;gap:3px;justify-content:center;margin:0 auto}
+.mj-tile{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;border:2px solid transparent;background:#f0f0f5}
+.mj-tile:hover{border-color:var(--accent);transform:scale(1.08);background:#fff}
+.mj-tile.selected{border-color:var(--accent);background:rgba(0,113,227,.12);transform:scale(1.1)}
 .mj-tile.matched{visibility:hidden}
 .mj-tile.empty{background:transparent;cursor:default;border-color:transparent}
 .mj-tile.empty:hover{transform:none;border-color:transparent}
-.mj-info{display:flex;gap:20px;font-size:0.9rem;color:var(--text2);margin-top:16px;justify-content:center}
+.mj-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:16px;justify-content:center}
 
 /* Fish */
-#fish-game{display:block;border-radius:var(--radius-sm);background:linear-gradient(180deg,#0a1628 0%,#0d2137 40%,#0c1a2e 100%);max-width:100%;cursor:crosshair}
-.fish-info{display:flex;gap:20px;font-size:0.9rem;color:var(--text2);margin-top:12px}
+.fish-wrap canvas{display:block;border-radius:var(--radius-sm);background:linear-gradient(180deg,#0a1628 0%,#0d2137 40%,#0c1a2e 100%);max-width:100%;cursor:crosshair}
+.fish-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:12px}
 
-/* BLOG */
+/* Gold */
+.gold-wrap canvas{display:block;border-radius:var(--radius-sm);background:linear-gradient(180deg,#3d2817 0%,#6b4423 40%,#4a2c0e 100%);max-width:100%;cursor:pointer}
+.gold-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:12px;flex-wrap:wrap}
+
+/* Blog */
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
 .blog-card{background:var(--card);border-radius:var(--radius);overflow:hidden;transition:transform var(--trans),box-shadow var(--trans);cursor:pointer;border:1px solid var(--border)}
 .blog-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
 .blog-card .img{width:100%;height:180px;object-fit:cover;background:linear-gradient(135deg,#e8e8ed,#d2d2d7);display:flex;align-items:center;justify-content:center;font-size:2.5rem}
 .blog-card .body{padding:18px}
-.blog-card .date{font-size:0.78rem;color:var(--text2)}
+.blog-card .date{font-size:.78rem;color:var(--text2)}
 .blog-card h3{font-size:1.15rem;margin:6px 0 8px;font-weight:600}
-.blog-card p{font-size:0.88rem;color:var(--text2);line-height:1.5}
+.blog-card p{font-size:.88rem;color:var(--text2);line-height:1.5}
 
-/* CHART TOOL */
-textarea.data-input{width:100%;height:130px;border-radius:var(--radius-sm);border:1.5px solid var(--border);padding:14px;font-family:"SF Mono","Fira Code",Consolas,monospace;font-size:0.85rem;resize:vertical;background:#fff;color:var(--text);line-height:1.5}
+/* Chart */
+textarea.data-input{width:100%;height:130px;border-radius:var(--radius-sm);border:1.5px solid var(--border);padding:14px;font-family:"SF Mono","Fira Code",Consolas,monospace;font-size:.85rem;resize:vertical;background:#fff;color:var(--text);line-height:1.5}
 textarea.data-input:focus{outline:none;border-color:var(--accent)}
 .chart-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-.chart-controls select,.chart-controls button,.chart-controls input{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:0.85rem;background:#fff;cursor:pointer;font-family:inherit;color:var(--text)}
-.chart-controls button.btn-go{background:var(--accent);color:#fff;border-color:var(--accent)}
 #chart-wrap{height:360px;position:relative}
 #chart-wrap canvas{width:100%!important}
 
-/* FOOTER */
-footer{text-align:center;padding:36px 24px;color:var(--text2);font-size:0.82rem;border-top:1px solid var(--border);margin-top:80px}
+footer{text-align:center;padding:36px 24px;color:var(--text2);font-size:.82rem;border-top:1px solid var(--border);margin-top:80px}
 
-/* FADE */
-.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.7s,transform 0.7s}
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s}
 .fade-in.visible{opacity:1;transform:translateY(0)}
 
-/* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
-.modal{background:#fff;border-radius:var(--radius);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:36px;box-shadow:0 20px 60px rgba(0,0,0,0.2);position:relative}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(6px)}
+.modal{background:#fff;border-radius:var(--radius);max-width:640px;width:100%;max-height:85vh;overflow-y:auto;padding:36px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative}
 .modal-close{position:absolute;top:14px;right:18px;background:none;border:none;font-size:1.5rem;cursor:pointer;color:var(--text2)}
 .modal h2{font-size:1.7rem;margin-bottom:10px}
-.modal .date{color:var(--text2);font-size:0.85rem;margin-bottom:22px}
+.modal .date{color:var(--text2);font-size:.85rem;margin-bottom:22px}
 .modal p{line-height:1.8;margin-bottom:14px}
-.hidden{display:none!important}
 
-/* RESPONSIVE */
 @media(max-width:768px){
   section{padding:60px 16px}
   .sec-title{font-size:2rem}
@@ -126,7 +113,6 @@ footer{text-align:center;padding:36px 24px;color:var(--text2);font-size:0.82rem;
   .sidebar .item{white-space:nowrap;width:auto;flex-shrink:0}
   .hero h1{font-size:2.4rem}
   .blog-grid{grid-template-columns:1fr}
-  #snake-game,#fish-game{width:100%!important;height:auto!important}
 }
 </style>
 </head>
@@ -140,7 +126,6 @@ footer{text-align:center;padding:36px 24px;color:var(--text2);font-size:0.82rem;
   <a href="#blog">记录</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero fade-in" id="home">
   <h1>用数据看世界，<br>用代码讲故事。</h1>
   <p>这里记录我的生活片段、数据分析探索，以及一些亲手打造的小工具和小游戏。</p>
@@ -150,117 +135,104 @@ footer{text-align:center;padding:36px 24px;color:var(--text2);font-size:0.82rem;
   </div>
 </section>
 
-<!-- GAMES -->
 <section id="games">
-  <div class="fade-in">
-    <div class="sec-label">GAMES</div>
-    <h2 class="sec-title">小游戏</h2>
-    <p class="sec-desc">闲时写的小游戏，支持难度调节和全屏模式。</p>
-  </div>
+  <div class="fade-in"><div class="sec-label">GAMES</div><h2 class="sec-title">小游戏</h2><p class="sec-desc">闲时写的小游戏，点击游戏名切换，支持难度调节和全屏模式。</p></div>
   <div class="sidebar-layout fade-in">
-    <div class="sidebar">
-      <div class="cat-title">游戏列表</div>
+    <div class="sidebar"><div class="cat-title">游戏列表</div>
       <button class="item active" data-panel="snake-panel">🐍 贪吃蛇</button>
       <button class="item" data-panel="mahjong-panel">🀄 连连看</button>
+      <button class="item" data-panel="gold-panel">⛏ 黄金矿工</button>
       <button class="item" data-panel="fish-panel">🐟 捕鱼达人</button>
     </div>
     <div class="content-panel" id="games-content"></div>
   </div>
 </section>
 
-<!-- TOOLS -->
 <section id="tools">
-  <div class="fade-in">
-    <div class="sec-label">TOOLS</div>
-    <h2 class="sec-title">小工具</h2>
-    <p class="sec-desc">自制的数据分析工具，干净、直接、没广告。</p>
-  </div>
+  <div class="fade-in"><div class="sec-label">TOOLS</div><h2 class="sec-title">小工具</h2><p class="sec-desc">自制的数据分析工具，干净、直接、没广告。</p></div>
   <div class="sidebar-layout fade-in">
-    <div class="sidebar">
-      <div class="cat-title">工具列表</div>
+    <div class="sidebar"><div class="cat-title">工具列表</div>
       <button class="item active" data-panel="chart-panel">📊 数据作图</button>
     </div>
     <div class="content-panel" id="tools-content"></div>
   </div>
 </section>
 
-<!-- BLOG -->
 <section id="blog">
-  <div class="fade-in">
-    <div class="sec-label">LIFE LOG</div>
-    <h2 class="sec-title">生活记录</h2>
-    <p class="sec-desc">一些值得记录的瞬间、思考和探索。点击卡片查看详情。</p>
-  </div>
+  <div class="fade-in"><div class="sec-label">LIFE LOG</div><h2 class="sec-title">生活记录</h2><p class="sec-desc">一些值得记录的瞬间、思考和探索。点击卡片查看详情。</p></div>
   <div class="blog-grid fade-in" id="blog-grid"></div>
 </section>
 
 <footer><p>Built with ❤️ · © 2026 My Space</p></footer>
 
 <script>
-// ====== FADE-IN ======
-const obs = new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.12});
+// ====== FADE ======
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.12});
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 
-// ====== SIDEBAR NAV ======
+// ====== SIDEBAR ======
 document.querySelectorAll('.sidebar').forEach(sb=>{
   sb.addEventListener('click',e=>{
-    const btn = e.target.closest('.item');
-    if(!btn)return;
+    const btn=e.target.closest('.item');if(!btn)return;
     sb.querySelectorAll('.item').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    const panelId = btn.dataset.panel;
-    const parent = sb.closest('section');
-    const content = parent.querySelector('.content-panel');
-    if(content)renderPanel(content,panelId);
+    const c=sb.closest('section').querySelector('.content-panel');
+    if(c)renderPanel(c,btn.dataset.panel);
   });
 });
 
-// ====== PANEL RENDERER ======
-function renderPanel(container,id){
-  const map = {
-    'snake-panel': renderSnake,
-    'mahjong-panel': renderMahjong,
-    'fish-panel': renderFish,
-    'chart-panel': renderChartTool,
-  };
-  const fn = map[id];
-  if(fn)fn(container);
+const panelMap={};
+function renderPanel(c,id){
+  // cleanup old game loops
+  Object.values(panelMap).forEach(g=>{if(g.cleanup)g.cleanup()});
+  const fns={'snake-panel':renderSnake,'mahjong-panel':renderMahjong,'fish-panel':renderFish,'gold-panel':renderGold,'chart-panel':renderChartTool};
+  const fn=fns[id];if(fn)fn(c);
+}
+
+// ====== FULLSCREEN HELPER ======
+function setupFullscreen(btnSelector,wrapperSelector){
+  const btn=document.querySelector(btnSelector),w=document.querySelector(wrapperSelector);
+  if(!btn||!w)return;
+  btn.addEventListener('click',()=>{
+    if(document.fullscreenElement){document.exitFullscreen();return}
+    if(w.requestFullscreen)w.requestFullscreen().catch(()=>{});
+    else if(w.webkitRequestFullscreen)w.webkitRequestFullscreen();
+  });
+  // exit button
+  w.querySelectorAll('.fs-exit').forEach(b=>b.addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen()}));
 }
 
 // ====== SNAKE ======
-let snakeState = null;
 function renderSnake(ct){
   ct.innerHTML=`
-    <div class="toolbar">
-      <select onchange="changeSnakeDifficulty(this.value)">
-        <option value="easy">🐢 简单</option>
-        <option value="medium" selected>🐍 普通</option>
-        <option value="hard">⚡ 困难</option>
-      </select>
-      <button class="btn-full" onclick="toggleSnakeFullscreen()">⛶ 全屏</button>
+    <div class="toolbar fs-hide">
+      <select id="snake-diff"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select>
+      <button class="btn-full fs-hide" id="snake-fs-btn">⛶ 全屏</button>
     </div>
-    <canvas id="snake-game" width="540" height="540"></canvas>
-    <div class="snake-info">
-      <span>得分：<strong id="snake-score">0</strong></span>
-      <span>🏆 最高分：<strong id="snake-best">0</strong></span>
-      <span>方向键/WASD · 空格暂停</span>
+    <div class="game-wrapper snake-wrap" id="snake-wrapper">
+      <div class="fs-show fs-info"><span>得分：<strong id="snake-score-fs">0</strong></span><span>🏆 <strong id="snake-best-fs">0</strong></span><select id="snake-diff-fs"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select></div>
+      <button class="fs-exit" id="snake-fs-exit">✕ 退出全屏</button>
+      <canvas id="snake-game" width="540" height="540"></canvas>
     </div>
+    <div class="snake-info fs-hide"><span>得分：<strong id="snake-score">0</strong></span><span>🏆 最高分：<strong id="snake-best">0</strong></span><span>方向键/WASD · 空格暂停</span></div>
   `;
-  initSnakeGame();
+  initSnake();
+  setupFullscreen('#snake-fs-btn','#snake-wrapper');
 }
 
-function initSnakeGame(){
-  const c=document.getElementById('snake-game');
-  const ctx=c.getContext('2d');
-  const W=c.width,H=c.height,gs=30,tc=W/gs;
+function initSnake(){
+  const c=document.getElementById('snake-game'),ctx=c.getContext('2d');
+  const W=540,H=540,gs=30,tc=18;
   const speeds={easy:140,medium:90,hard:50};
-
   let snake=[{x:8,y:9},{x:7,y:9},{x:6,y:9}],dir={x:1,y:0},ndir={x:1,y:0};
-  let food,score=0,best=parseInt(localStorage.getItem('snakeBest')||'0'),loop=null,running=true,paused=false,speed=speeds.medium;
-  document.getElementById('snake-best').textContent=best;
+  let food,score=0,best=parseInt(localStorage.getItem('snakeBest')||'0'),loop=null,speed=speeds.medium,running=true,paused=false;
+  document.getElementById('snake-best').textContent=best;if(document.getElementById('snake-best-fs'))document.getElementById('snake-best-fs').textContent=best;
 
   function rfood(){do{food={x:Math.floor(Math.random()*tc),y:Math.floor(Math.random()*tc)}}while(snake.some(s=>s.x===food.x&&s.y===food.y))}
   rfood();
+
+  function resize(){const ws=Math.min(c.parentElement.clientWidth-40,W);c.style.width=ws+'px';c.style.height=ws+'px'}
+  resize();window.addEventListener('resize',resize);
 
   function draw(){
     ctx.fillStyle='#1d1d1f';ctx.fillRect(0,0,W,H);
@@ -283,31 +255,39 @@ function initSnakeGame(){
     const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
     if(h.x<0||h.x>=tc||h.y<0||h.y>=tc||snake.some(s=>s.x===h.x&&s.y===h.y)){over();return}
     snake.unshift(h);
-    if(h.x===food.x&&h.y===food.y){score+=10;document.getElementById('snake-score').textContent=score;rfood()}else{snake.pop()}
+    if(h.x===food.x&&h.y===food.y){score+=10;updateScore();rfood()}else{snake.pop()}
     draw();
   }
+
+  function updateScore(){
+    document.getElementById('snake-score').textContent=score;
+    const fs=document.getElementById('snake-score-fs');if(fs)fs.textContent=score;
+  }
+
   function over(){
     running=false;clearInterval(loop);
-    if(score>best){best=score;localStorage.setItem('snakeBest',best);document.getElementById('snake-best').textContent=best}
+    if(score>best){best=score;localStorage.setItem('snakeBest',best);document.getElementById('snake-best').textContent=best;const fb=document.getElementById('snake-best-fs');if(fb)fb.textContent=best}
     ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,0,W,H);
     ctx.fillStyle='#fff';ctx.font='bold 24px -apple-system,sans-serif';ctx.textAlign='center';
-    ctx.fillText('游戏结束',W/2,H/2-12);
-    ctx.font='15px -apple-system,sans-serif';ctx.fillStyle='#aaa';
-    ctx.fillText('得分: '+score+'  |  点击重新开始',W/2,H/2+20);ctx.textAlign='start';
+    ctx.fillText('游戏结束',W/2,H/2-12);ctx.font='15px -apple-system,sans-serif';ctx.fillStyle='#aaa';
+    ctx.fillText('得分: '+score+' | 点击重新开始',W/2,H/2+20);ctx.textAlign='start';
   }
 
   function restart(){
     clearInterval(loop);
     snake=[{x:8,y:9},{x:7,y:9},{x:6,y:9}];dir={x:1,y:0};ndir={x:1,y:0};score=0;
-    document.getElementById('snake-score').textContent='0';running=true;paused=false;rfood();draw();
+    updateScore();running=true;paused=false;rfood();draw();
     loop=setInterval(tick,speed);
   }
 
+  function setSpeed(s){speed=s;if(running){clearInterval(loop);loop=setInterval(tick,speed)}}
+
   c.addEventListener('click',()=>{if(!running)restart()});
 
-  document.addEventListener('keydown',handleKey);
-
   function handleKey(e){
+    const pc=document.getElementById('snake-wrapper');
+    const isFS=!!document.fullscreenElement&&document.fullscreenElement===pc;
+    if(!isFS&&document.activeElement!==document.body&&document.activeElement!==c)return;
     if(!running)return;
     if(e.key===' '){paused=!paused;e.preventDefault();return}
     if(paused)return;
@@ -317,6 +297,7 @@ function initSnakeGame(){
     if((k==='arrowleft'||k==='a')&&dir.x===0)ndir={x:-1,y:0};
     if((k==='arrowright'||k==='d')&&dir.x===0)ndir={x:1,y:0};
   }
+  document.addEventListener('keydown',handleKey);
 
   let tx,ty;
   c.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;e.preventDefault()});
@@ -328,105 +309,58 @@ function initSnakeGame(){
     else{if(dy>0&&dir.y===0)ndir={x:0,y:1};else if(dy<0&&dir.y===0)ndir={x:0,y:-1}}
   });
 
+  document.getElementById('snake-diff').addEventListener('change',function(){setSpeed(speeds[this.value])});
+  const dfs=document.getElementById('snake-diff-fs');if(dfs)dfs.addEventListener('change',function(){setSpeed(speeds[this.value])});
+
   draw();loop=setInterval(tick,speed);
 
-  // expose to global for difficulty change
-  window._snake={c,ctx,W,H,gs,tc,setSpeed(s){speed=s;clearInterval(loop);if(running)loop=setInterval(tick,speed)},getState:()=>({running,paused}),restart,handleKey,snakeCanvas:c};
+  panelMap.snake={cleanup(){clearInterval(loop);document.removeEventListener('keydown',handleKey)}};
 }
 
-function changeSnakeDifficulty(v){
-  const speeds={easy:140,medium:90,hard:50};
-  if(window._snake)window._snake.setSpeed(speeds[v]);
-}
-
-function toggleSnakeFullscreen(){
-  const sc=window._snake?.snakeCanvas;
-  if(!sc)return;
-  const overlay=document.createElement('div');overlay.className='game-fullscreen';
-  overlay.innerHTML=`
-    <button class="fs-close" onclick="this.parentElement.remove()">✕</button>
-    <div class="fs-toolbar">
-      <select onchange="changeSnakeDifficulty(this.value)" style="color:#fff">
-        <option value="easy">🐢 简单</option>
-        <option value="medium" selected>🐍 普通</option>
-        <option value="hard">⚡ 困难</option>
-      </select>
-    </div>
-    <div class="fs-score">得分：<span id="fs-snake-score">0</span> &nbsp; 🏆 <span id="fs-snake-best">0</span></div>
-  `;
-  const fc=sc.cloneNode(true);
-  fc.id='fs-snake';fc.width=Math.min(window.innerWidth-80,700);fc.height=Math.min(window.innerHeight-160,700);
-  overlay.appendChild(fc);
-  document.body.appendChild(overlay);
-
-  // Sync score
-  setInterval(()=>{
-    const se=document.getElementById('snake-score'),be=document.getElementById('snake-best');
-    const fse=document.getElementById('fs-snake-score'),fbe=document.getElementById('fs-snake-best');
-    if(se&&fse)fse.textContent=se.textContent;
-    if(be&&fbe)fbe.textContent=be.textContent;
-  },200);
-}
-
-// ====== MAHJONG (连连看) ======
+// ====== MAHJONG ======
 function renderMahjong(ct){
   ct.innerHTML=`
-    <div class="toolbar">
-      <select id="mj-difficulty" onchange="initMahjong()">
-        <option value="6">🐢 简单 (6×6)</option>
-        <option value="8" selected>🐍 普通 (8×8)</option>
-        <option value="10">⚡ 困难 (10×10)</option>
-      </select>
-      <button class="btn-full" onclick="toggleMjFullscreen()">⛶ 全屏</button>
+    <div class="toolbar fs-hide">
+      <select id="mj-diff"><option value="6">🐢 简单(6×6)</option><option value="8" selected>🐍 普通(8×8)</option><option value="10">⚡ 困难(10×10)</option></select>
+      <button class="btn-full" id="mj-fs-btn">⛶ 全屏</button>
     </div>
-    <div id="mj-grid-wrap" style="display:flex;justify-content:center"></div>
-    <div class="mj-info">
-      <span>剩余：<strong id="mj-left">0</strong></span>
-      <span>用时：<strong id="mj-time">0</strong>s</span>
+    <div class="game-wrapper" id="mj-wrapper">
+      <button class="fs-exit" id="mj-fs-exit">✕ 退出全屏</button>
+      <div id="mj-grid-wrap" style="display:flex;justify-content:center"></div>
     </div>
+    <div class="mj-info fs-hide"><span>剩余：<strong id="mj-left">0</strong></span><span>用时：<strong id="mj-time">0</strong>s</span></div>
   `;
   initMahjong();
+  setupFullscreen('#mj-fs-btn','#mj-wrapper');
 }
 
-const EMOJIS='🍎🍊🍋🍇🍓🍒🥝🍌🍑🥭🍍🥥🫐🍈🍐🥑🌽🥕🍔🍕🍩🍪🎂🍿🍭🍫🍦🧁🍰🥜🍯☕🍵🧃🥤🏀⚽🎾🏈🎱🚀🌈⭐🔥💎🎵🎸🦊🐶🐱🐼🐨🐸🦄🐙🦀🐳🦋🌻🌹'.split('');
+// Fixed emoji array using spread operator for proper surrogate pair handling
+const EMOJIS=[...'🍎🍊🍋🍇🍓🍒🥝🍌🍑🥭🍍🥥🍈🍐🥑🌽🥕🍔🍕🍩🍪🎂🍿🍭🍫🍦🧁🍰🥜🍯☕🍵🧃🥤🏀⚽🎾🏈🎱🚀🌈⭐🔥💎🎵🎸🦊🐶🐱🐼🐨🐸🦄🐙🦀🐳🦋🌻🌹🍀🌺🌸💐🍄🐣🐤🐥🦉🐧🐝🐞🌙☀️⚡❄️'];
+
 let mjState=null;
 
 function initMahjong(){
-  const sel=document.getElementById('mj-difficulty');
-  const size=parseInt(sel?.value||'8');
-  const wrap=document.getElementById('mj-grid-wrap');
-  if(!wrap)return;
-
-  // Ensure even number of tiles, pick size*size/2 unique emojis, then duplicate
+  const size=parseInt(document.getElementById('mj-diff')?.value||'8');
   const total=size*size;
   if(total%2!==0)return;
   const pairs=total/2;
   const tiles=[];
   for(let i=0;i<pairs;i++)tiles.push(EMOJIS[i%EMOJIS.length],EMOJIS[i%EMOJIS.length]);
-  // Shuffle
   for(let i=tiles.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[tiles[i],tiles[j]]=[tiles[j],tiles[i]]}
-
   const grid=[];let idx=0;
   for(let r=0;r<size;r++){grid[r]=[];for(let c=0;c<size;c++)grid[r][c]=tiles[idx++]}
-
   mjState={grid,size,selected:null,left:total,startTime:Date.now(),timer:null};
-  document.getElementById('mj-left').textContent=total;
-  document.getElementById('mj-time').textContent='0';
+  document.getElementById('mj-left').textContent=total;document.getElementById('mj-time').textContent='0';
   if(mjState.timer)clearInterval(mjState.timer);
-  mjState.timer=setInterval(()=>{
-    if(mjState.left===0){clearInterval(mjState.timer);return}
-    document.getElementById('mj-time').textContent=Math.floor((Date.now()-mjState.startTime)/1000);
-  },500);
-
+  mjState.timer=setInterval(()=>{if(mjState.left===0){clearInterval(mjState.timer);return}document.getElementById('mj-time').textContent=Math.floor((Date.now()-mjState.startTime)/1000)},500);
   renderMjGrid();
 }
 
 function renderMjGrid(){
   if(!mjState)return;
-  const wrap=document.getElementById('mj-grid-wrap');
-  const {grid,size}=mjState;
-  const tileSize=size>8?48:56;
-  wrap.innerHTML=`<div class="mj-grid" style="grid-template-columns:repeat(${size},${tileSize}px)">${
+  const wrap=document.getElementById('mj-grid-wrap'),{grid,size}=mjState;
+  const ts=size>8?44:52;
+  wrap.innerHTML=`<div class="mj-grid" style="grid-template-columns:repeat(${size},${ts}px)">${
     grid.map((row,r)=>row.map((tile,c)=>{
       if(!tile)return '<div class="mj-tile empty"></div>';
       const sel=mjState.selected&&mjState.selected.r===r&&mjState.selected.c===c?' selected':'';
@@ -438,298 +372,316 @@ function renderMjGrid(){
 
 function onMjClick(r,c){
   if(!mjState||mjState.left===0)return;
-  const {grid,selected}=mjState;
-
-  if(!selected){
-    mjState.selected={r,c};
-    renderMjGrid();
-    return;
-  }
-
+  const{grid,selected}=mjState;
+  if(!selected){mjState.selected={r,c};renderMjGrid();return}
   const sr=selected.r,sc=selected.c;
   if(sr===r&&sc===c){mjState.selected=null;renderMjGrid();return}
-
   if(grid[sr][sc]===grid[r][c]&&canConnect(grid,sr,sc,r,c)){
-    grid[sr][sc]=null;grid[r][c]=null;
-    mjState.left-=2;
+    grid[sr][sc]=null;grid[r][c]=null;mjState.left-=2;
     document.getElementById('mj-left').textContent=mjState.left;
-    if(mjState.left===0){
-      clearInterval(mjState.timer);
-      const t=Math.floor((Date.now()-mjState.startTime)/1000);
-      document.getElementById('mj-time').textContent=t;
-      setTimeout(()=>alert(`🎉 恭喜通关！用时 ${t} 秒`),300);
-    }
+    if(mjState.left===0){clearInterval(mjState.timer);const t=Math.floor((Date.now()-mjState.startTime)/1000);document.getElementById('mj-time').textContent=t;setTimeout(()=>alert(`🎉 通关！用时 ${t}s`),300)}
   }
-  mjState.selected=null;
-  renderMjGrid();
+  mjState.selected=null;renderMjGrid();
 }
 
 function canConnect(grid,r1,c1,r2,c2){
   const R=grid.length,C=grid[0].length;
-
-  function clearH(r,c1,c2){const a=Math.min(c1,c2),b=Math.max(c1,c2);for(let c=a;c<=b;c++)if(grid[r][c]!==null&&!(r===r1&&c===c1)&&!(r===r2&&c===c2))return false;return true}
-  function clearV(c,r1,r2){const a=Math.min(r1,r2),b=Math.max(r1,r2);for(let r=a;r<=b;r++)if(grid[r][c]!==null&&!(r===r1&&c===c1)&&!(r===r2&&c===c2))return false;return true}
-
-  // Direct
+  function clearH(r,a,b){for(let c=Math.min(a,b);c<=Math.max(a,b);c++)if(grid[r][c]!==null&&!(r===r1&&c===c1)&&!(r===r2&&c===c2))return false;return true}
+  function clearV(c,a,b){for(let r=Math.min(a,b);r<=Math.max(a,b);r++)if(grid[r][c]!==null&&!(r===r1&&c===c1)&&!(r===r2&&c===c2))return false;return true}
   if(r1===r2&&clearH(r1,c1,c2))return true;
   if(c1===c2&&clearV(c1,r1,r2))return true;
-
-  // 1 turn
   if(grid[r1][c2]===null&&clearH(r1,c1,c2)&&clearV(c2,r1,r2))return true;
   if(grid[r2][c1]===null&&clearV(c1,r1,r2)&&clearH(r2,c1,c2))return true;
-
-  // 2 turns
-  for(let r=0;r<R;r++){if(grid[r][c1]===null&&grid[r][c2]===null&&clearV(c1,Math.min(r1,r),Math.max(r1,r))&&clearH(r,c1,c2)&&clearV(c2,Math.min(r,r2),Math.max(r,r2)))return true}
-  for(let c=0;c<C;c++){if(grid[r1][c]===null&&grid[r2][c]===null&&clearH(r1,Math.min(c1,c),Math.max(c1,c))&&clearV(c,r1,r2)&&clearH(r2,Math.min(c,c2),Math.max(c,c2)))return true}
-
+  for(let r=0;r<R;r++)if(grid[r][c1]===null&&grid[r][c2]===null&&clearV(c1,Math.min(r1,r),Math.max(r1,r))&&clearH(r,c1,c2)&&clearV(c2,Math.min(r,r2),Math.max(r,r2)))return true;
+  for(let c=0;c<C;c++)if(grid[r1][c]===null&&grid[r2][c]===null&&clearH(r1,Math.min(c1,c),Math.max(c1,c))&&clearV(c,r1,r2)&&clearH(r2,Math.min(c,c2),Math.max(c,c2)))return true;
   return false;
 }
 
-function toggleMjFullscreen(){
-  alert('连连看全屏模式开发中，敬请期待～');
-}
+document.addEventListener('change',e=>{if(e.target.id==='mj-diff'){if(mjState&&mjState.timer)clearInterval(mjState.timer);initMahjong()}});
 
-// ====== FISH HUNTER (捕鱼达人) ======
-let fishState=null;
-function renderFish(ct){
+// ====== GOLD MINER ======
+function renderGold(ct){
   ct.innerHTML=`
-    <div class="toolbar">
-      <select id="fish-difficulty" onchange="changeFishDifficulty(this.value)">
-        <option value="easy">🐢 简单</option>
-        <option value="medium" selected>🐍 普通</option>
-        <option value="hard">⚡ 困难</option>
-      </select>
-      <button class="btn-full" onclick="toggleFishFullscreen()">⛶ 全屏</button>
+    <div class="toolbar fs-hide">
+      <select id="gold-diff"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select>
+      <button class="btn-full" id="gold-fs-btn">⛶ 全屏</button>
     </div>
-    <canvas id="fish-game" width="600" height="420"></canvas>
-    <div class="fish-info">
-      <span>得分：<strong id="fish-score">0</strong></span>
-      <span>🏆 最高分：<strong id="fish-best">0</strong></span>
+    <div class="game-wrapper gold-wrap" id="gold-wrapper">
+      <button class="fs-exit" id="gold-fs-exit">✕ 退出全屏</button>
+      <div class="fs-show fs-info"><span>💰 <strong id="gold-score-fs">0</strong></span><span>📦 关卡 <strong id="gold-level-fs">1</strong></span><span>🎯 目标 <strong id="gold-target-fs">500</strong></span></div>
+      <canvas id="gold-game" width="600" height="440"></canvas>
     </div>
+    <div class="gold-info fs-hide"><span>💰 金币：<strong id="gold-score">0</strong></span><span>📦 关卡：<strong id="gold-level">1</strong>/100</span><span>🎯 目标：<strong id="gold-target">500</strong></span></div>
   `;
-  initFishGame();
+  initGold();
+  setupFullscreen('#gold-fs-btn','#gold-wrapper');
 }
 
-function initFishGame(){
-  const c=document.getElementById('fish-game');
-  const ctx=c.getContext('2d');
-  const W=c.width,H=c.height;
-  const diffSettings={easy:{maxFish:6,speedMul:0.6,spawnRate:0.008},medium:{maxFish:10,speedMul:1,spawnRate:0.012},hard:{maxFish:15,speedMul:1.5,spawnRate:0.02}};
-  let settings=diffSettings.medium;
-  let score=0,best=parseInt(localStorage.getItem('fishBest')||'0'),running=true,animId;
-  document.getElementById('fish-best').textContent=best;
+function initGold(){
+  const c=document.getElementById('gold-game'),ctx=c.getContext('2d');
+  const W=600,H=440;
+  let level=1,totalGold=0,targetGold=500,swingAngle=0,swingSpeed=0.025,hookX=W/2,hookY=60,hookLen=30,hookState='swing',hookV=0,items=[],animId=null,difficulty='medium';
+  const speeds={easy:0.018,medium:0.025,hard:0.035};
+  const goldColors=['#ffd700','#ffb800','#ff9500'];
 
-  const fishTypes=[
-    {emoji:'🐟',size:24,points:10,color:'#64d2ff'},
-    {emoji:'🐠',size:28,points:20,color:'#ff9f0a'},
-    {emoji:'🐡',size:30,points:30,color:'#ff6b6b'},
-    {emoji:'🦈',size:40,points:50,color:'#86868b'},
-    {emoji:'🐙',size:26,points:15,color:'#bf5af2'},
-    {emoji:'🦀',size:22,points:25,color:'#ff375f'},
-    {emoji:'🐬',size:36,points:40,color:'#5e5ce6'},
-    {emoji:'🐳',size:50,points:80,color:'#30d158'},
-  ];
-
-  let fishes=[],particles=[],bubbles=[];
-  // Bubbles
-  for(let i=0;i<15;i++)bubbles.push({x:Math.random()*W,y:Math.random()*H,r:2+Math.random()*4,speed:0.2+Math.random()*0.5,opacity:0.2+Math.random()*0.3});
-
-  function spawnFish(){
-    const ft=fishTypes[Math.floor(Math.random()*fishTypes.length)];
-    const fromLeft=Math.random()>0.5;
-    fishes.push({
-      x:fromLeft?-50:W+50,y:40+Math.random()*(H-80),
-      vx:(fromLeft?1:-1)*(0.5+Math.random()*2)*settings.speedMul,
-      vy:(Math.random()-0.5)*1.5*settings.speedMul,
-      type:ft,dir:fromLeft?1:-1,wobble:Math.random()*Math.PI*2,wobbleSpeed:0.01+Math.random()*0.03,
-    });
+  function genItems(){
+    items=[];
+    const count=8+level;
+    for(let i=0;i<count;i++){
+      const x=40+Math.random()*(W-80),y=120+Math.random()*(H-160);
+      const r=Math.random();
+      if(r<0.6){// gold: size varies
+        const size=14+Math.random()*26,value=Math.floor(size*3);
+        items.push({x,y,w:size,h:size,type:'gold',value,color:goldColors[Math.floor(Math.random()*3)]});
+      }else if(r<0.85){// rock
+        const size=18+Math.random()*20;
+        items.push({x,y,w:size,h:size,type:'rock',value:0,color:'#888'});
+      }else{// diamond
+        items.push({x,y,w:14,h:22,type:'diamond',value:200+level*10,color:'#00e5ff'});
+      }
+    }
   }
 
-  c.addEventListener('click',e=>{
-    const rect=c.getBoundingClientRect();
-    const mx=e.clientX-rect.left,my=e.clientY-rect.top;
-    // Check hits
-    for(let i=fishes.length-1;i>=0;i--){
-      const f=fishes[i];
-      const dx=mx-f.x,dy=my-f.y,dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<f.type.size+8){
-        score+=f.type.points;
-        document.getElementById('fish-score').textContent=score;
-        // Particles
-        for(let j=0;j<8;j++)particles.push({x:f.x,y:f.y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:1,color:f.type.color});
-        fishes.splice(i,1);
-        break;
-      }
-    }
-  });
+  function updateTarget(){targetGold=500+level*150;document.getElementById('gold-target').textContent=targetGold;const ft=document.getElementById('gold-target-fs');if(ft)ft.textContent=targetGold}
+  function updateScoreUI(){document.getElementById('gold-score').textContent=totalGold;const fs=document.getElementById('gold-score-fs');if(fs)fs.textContent=totalGold}
+  function updateLevelUI(){document.getElementById('gold-level').textContent=level;const fl=document.getElementById('gold-level-fs');if(fl)fl.textContent=level}
 
   function draw(){
-    if(!running)return;
     ctx.clearRect(0,0,W,H);
-    // Background gradient
-    const grad=ctx.createLinearGradient(0,0,0,H);
-    grad.addColorStop(0,'#0a1628');grad.addColorStop(0.4,'#0d2137');grad.addColorStop(1,'#0c1a2e');
-    ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+    // ground
+    const grd=ctx.createLinearGradient(0,0,0,H);
+    grd.addColorStop(0,'#3d2817');grd.addColorStop(0.25,'#5a3a1e');grd.addColorStop(1,'#3a2010');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+    // ground surface
+    ctx.fillStyle='#7a5a3a';ctx.fillRect(0,H-40,W,40);
+    ctx.fillStyle='#8b6b4a';ctx.fillRect(0,H-38,W,6);
 
-    // Light rays
-    for(let i=0;i<3;i++){
-      ctx.fillStyle=`rgba(100,180,255,${0.03+Math.sin(Date.now()/3000+i)*0.02})`;
-      ctx.beginPath();ctx.moveTo(W*(0.2+i*0.3),0);ctx.lineTo(W*(0.1+i*0.3),H);ctx.lineTo(W*(0.3+i*0.3),H);ctx.fill();
-    }
-
-    // Bubbles
-    bubbles.forEach(b=>{b.y-=b.speed;if(b.y<-10){b.y=H+10;b.x=Math.random()*W}ctx.fillStyle=`rgba(255,255,255,${b.opacity})`;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill()});
-
-    // Fish
-    fishes.forEach(f=>{
-      f.x+=f.vx;f.y+=f.vy+Math.sin(f.wobble)*0.3;f.wobble+=f.wobbleSpeed;
-      if(f.x<-60||f.x>W+60||f.y<-20||f.y>H+20){
-        const idx=fishes.indexOf(f);if(idx>-1)fishes.splice(idx,1);
-        return;
+    // Items
+    items.forEach(it=>{
+      if(it.caught)return;
+      ctx.save();ctx.translate(it.x,it.y);
+      if(it.type==='gold'){
+        ctx.fillStyle=it.color;ctx.shadowColor=it.color;ctx.shadowBlur=8;
+        ctx.beginPath();ctx.roundRect(-it.w/2,-it.h/2,it.w,it.h,6);ctx.fill();
+        ctx.fillStyle='rgba(255,255,255,0.3)';ctx.beginPath();ctx.roundRect(-it.w/2+4,-it.h/2+3,it.w/2,it.h/3,3);ctx.fill();
+        ctx.shadowBlur=0;ctx.fillStyle='#3a2010';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText('$'+it.value,0,4);
+      }else if(it.type==='rock'){
+        ctx.fillStyle='#666';ctx.shadowColor='#444';ctx.shadowBlur=4;
+        ctx.beginPath();ctx.roundRect(-it.w/2,-it.h/2,it.w,it.h,5);ctx.fill();ctx.shadowBlur=0;
+        ctx.fillStyle='#888';ctx.beginPath();ctx.roundRect(-it.w/2+3,-it.h/2+2,it.w/3,it.h/3,3);ctx.fill();
+      }else{
+        ctx.fillStyle='#00e5ff';ctx.shadowColor='#00e5ff';ctx.shadowBlur=12;
+        ctx.beginPath();ctx.moveTo(0,-it.h/2);ctx.lineTo(it.w/2,0);ctx.lineTo(0,it.h/2);ctx.lineTo(-it.w/2,0);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
+        ctx.fillStyle='#fff';ctx.font='bold 10px sans-serif';ctx.textAlign='center';ctx.fillText('💎'+it.value,-2,2);
       }
-      ctx.save();ctx.translate(f.x,f.y);ctx.scale(f.dir,1);
-      ctx.font=`${f.type.size}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';
-      ctx.fillText(f.type.emoji,0,0);
       ctx.restore();
     });
 
-    // Particles
-    particles.forEach(p=>{
-      p.x+=p.vx;p.y+=p.vy;p.life-=0.03;
-      if(p.life<=0){const i=particles.indexOf(p);if(i>-1)particles.splice(i,1);return}
-      ctx.fillStyle=`rgba(${hexToRgb(p.color)},${p.life})`;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill();
+    // Cable
+    const sx=W/2, sy=60;
+    ctx.strokeStyle='#aaa';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(hookX,hookY+hookLen);ctx.stroke();
+
+    // Hook
+    ctx.save();ctx.translate(hookX,hookY+hookLen);
+    ctx.fillStyle='#ccc';ctx.strokeStyle='#999';ctx.lineWidth=2;
+    // claw
+    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-12,16);ctx.lineTo(-6,16);ctx.lineTo(0,8);ctx.lineTo(6,16);ctx.lineTo(12,16);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.restore();
+
+    // Caught item follows hook
+    const caught=items.find(it=>it.caught);
+    if(caught){ctx.fillStyle=caught.color;ctx.font='bold 16px sans-serif';ctx.textAlign='center';ctx.fillText(caught.type==='diamond'?'💎':caught.type==='rock'?'🪨':'🟡',hookX,hookY+hookLen+28)}
+
+    // Ground decorations
+    ctx.fillStyle='rgba(0,0,0,0.1)';
+    for(let i=0;i<8;i++){ctx.beginPath();ctx.arc(40+i*75,H-40,6+Math.random()*8,0,Math.PI*2);ctx.fill()}
+  }
+
+  function loop(){
+    if(hookState==='swing'){
+      swingAngle+=swingSpeed;
+      hookX=W/2+Math.sin(swingAngle)*220;
+      hookLen=30;
+    }else if(hookState==='dropping'){
+      hookLen+=hookV;hookV+=0.4;
+      // collision
+      const hx=hookX,hy=hookY+hookLen;
+      for(const it of items){
+        if(it.caught)continue;
+        const dx=hx-it.x,dy=hy-it.y,dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<(it.w+it.h)/3+8){hookState='retract';if(it.type==='rock')hookV=-2;else if(it.type==='diamond')hookV=-2.5;else hookV=-3-Math.max(0,it.value/30);it.caught=true;break}
+      }
+      if(hookY+hookLen>H-30){hookState='retract';hookV=-2}
+    }else if(hookState==='retract'){
+      hookLen+=hookV;hookV+=0.08;
+      if(hookY+hookLen<=60){
+        hookState='swing';hookLen=30;hookV=0;
+        // Score caught item
+        const caught=items.find(it=>it.caught);
+        if(caught){totalGold+=caught.value;updateScoreUI();caught.caught=null}
+      }
+    }
+    draw();
+    // Check level complete
+    if(hookState==='swing'&&totalGold>=targetGold){
+      if(level>=100){alert('🏆 恭喜！你已通关全部 100 关！总金币：'+totalGold);return}
+      level++;updateLevelUI();updateTarget();genItems();
+    }
+    animId=requestAnimationFrame(loop);
+  }
+
+  c.addEventListener('click',()=>{if(hookState==='swing'){hookState='dropping';hookV=3}});
+  // keyboard support
+  document.addEventListener('keydown',function goldKey(e){if(e.key===' '||e.key==='ArrowDown'){e.preventDefault();if(hookState==='swing'){hookState='dropping';hookV=3}}});
+  document.getElementById('gold-diff').addEventListener('change',function(){difficulty=this.value;swingSpeed=speeds[difficulty]});
+
+  genItems();updateTarget();updateLevelUI();updateScoreUI();draw();animId=requestAnimationFrame(loop);
+
+  panelMap.gold={cleanup(){if(animId)cancelAnimationFrame(animId)}}
+}
+
+// ====== FISH ======
+function renderFish(ct){
+  ct.innerHTML=`
+    <div class="toolbar fs-hide">
+      <select id="fish-diff"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select>
+      <button class="btn-full" id="fish-fs-btn">⛶ 全屏</button>
+    </div>
+    <div class="game-wrapper fish-wrap" id="fish-wrapper">
+      <button class="fs-exit" id="fish-fs-exit">✕ 退出全屏</button>
+      <div class="fs-show fs-info"><span>🐟 <strong id="fish-score-fs">0</strong></span><span>🏆 <strong id="fish-best-fs">0</strong></span></div>
+      <canvas id="fish-game" width="600" height="420"></canvas>
+    </div>
+    <div class="fish-info fs-hide"><span>得分：<strong id="fish-score">0</strong></span><span>🏆 最高分：<strong id="fish-best">0</strong></span></div>
+  `;
+  initFish();
+  setupFullscreen('#fish-fs-btn','#fish-wrapper');
+}
+
+function initFish(){
+  const c=document.getElementById('fish-game'),ctx=c.getContext('2d');
+  const W=600,H=420;
+  const diffSettings={easy:{maxFish:6,speedMul:0.6,spawnRate:0.008},medium:{maxFish:10,speedMul:1,spawnRate:0.012},hard:{maxFish:15,speedMul:1.5,spawnRate:0.02}};
+  let settings=diffSettings.medium,score=0,best=parseInt(localStorage.getItem('fishBest')||'0'),animId;
+  document.getElementById('fish-best').textContent=best;const fbfs=document.getElementById('fish-best-fs');if(fbfs)fbfs.textContent=best;
+
+  const fishTypes=[
+    {emoji:'🐟',size:24,points:10},{emoji:'🐠',size:28,points:20},{emoji:'🐡',size:30,points:30},
+    {emoji:'🦈',size:40,points:50},{emoji:'🐙',size:26,points:15},{emoji:'🦀',size:22,points:25},
+    {emoji:'🐬',size:36,points:40},{emoji:'🐳',size:44,points:80}
+  ];
+  let fishes=[],particles=[],bubbles=[];
+  for(let i=0;i<15;i++)bubbles.push({x:Math.random()*W,y:Math.random()*H,r:2+Math.random()*4,speed:0.2+Math.random()*0.5,opacity:0.2+Math.random()*0.3});
+
+  function spawnFish(){
+    const ft=fishTypes[Math.floor(Math.random()*fishTypes.length)],fromLeft=Math.random()>0.5;
+    fishes.push({x:fromLeft?-50:W+50,y:40+Math.random()*(H-80),vx:(fromLeft?1:-1)*(0.5+Math.random()*2)*settings.speedMul,vy:(Math.random()-0.5)*1.5*settings.speedMul,type:ft,dir:fromLeft?1:-1,wobble:Math.random()*Math.PI*2,wobbleSpeed:0.01+Math.random()*0.03});
+  }
+
+  c.addEventListener('click',e=>{
+    const rect=c.getBoundingClientRect(),mx=(e.clientX-rect.left)*(W/rect.width),my=(e.clientY-rect.top)*(H/rect.height);
+    for(let i=fishes.length-1;i>=0;i--){
+      const f=fishes[i],dx=mx-f.x,dy=my-f.y,dist=Math.sqrt(dx*dx+dy*dy);
+      if(dist<f.type.size+8){score+=f.type.points;updateScoreF();for(let j=0;j<8;j++)particles.push({x:f.x,y:f.y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:1});fishes.splice(i,1);break}
+    }
+  });
+
+  function updateScoreF(){
+    document.getElementById('fish-score').textContent=score;const fs=document.getElementById('fish-score-fs');if(fs)fs.textContent=score;
+    if(score>best){best=score;localStorage.setItem('fishBest',best);document.getElementById('fish-best').textContent=best;const fb=document.getElementById('fish-best-fs');if(fb)fb.textContent=best}
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const grd=ctx.createLinearGradient(0,0,0,H);grd.addColorStop(0,'#0a1628');grd.addColorStop(0.4,'#0d2137');grd.addColorStop(1,'#0c1a2e');
+    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+    for(let i=0;i<3;i++){ctx.fillStyle=`rgba(100,180,255,${0.03+Math.sin(Date.now()/3000+i)*0.02})`;ctx.beginPath();ctx.moveTo(W*(0.2+i*0.3),0);ctx.lineTo(W*(0.1+i*0.3),H);ctx.lineTo(W*(0.3+i*0.3),H);ctx.fill()}
+    bubbles.forEach(b=>{b.y-=b.speed;if(b.y<-10){b.y=H+10;b.x=Math.random()*W}ctx.fillStyle=`rgba(255,255,255,${b.opacity})`;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill()});
+    fishes.forEach(f=>{
+      f.x+=f.vx;f.y+=f.vy+Math.sin(f.wobble)*0.3;f.wobble+=f.wobbleSpeed;
+      if(f.x<-60||f.x>W+60||f.y<-20||f.y>H+20){const idx=fishes.indexOf(f);if(idx>-1)fishes.splice(idx,1);return}
+      ctx.save();ctx.translate(f.x,f.y);ctx.scale(f.dir,1);ctx.font=`${f.type.size}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(f.type.emoji,0,0);ctx.restore();
     });
-
-    // Spawn
+    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.03;if(p.life<=0){const i=particles.indexOf(p);if(i>-1)particles.splice(i,1);return}ctx.fillStyle=`rgba(255,255,255,${p.life})`;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill()});
     if(fishes.length<settings.maxFish&&Math.random()<settings.spawnRate)spawnFish();
-    // UI
-    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='14px -apple-system,sans-serif';ctx.fillText('点击鱼来捕鱼',16,24);
-
+    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='13px -apple-system,sans-serif';ctx.fillText('🖱 点击捕鱼',14,22);
     animId=requestAnimationFrame(draw);
   }
-  function hexToRgb(hex){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return`${r},${g},${b}`}
 
-  // Init fish
-  for(let i=0;i<3;i++)spawnFish();
-  draw();
-
-  window._fish={setDifficulty(d){settings=diffSettings[d]},c};
+  for(let i=0;i<3;i++)spawnFish();draw();
+  document.getElementById('fish-diff').addEventListener('change',function(){settings=diffSettings[this.value]});
+  panelMap.fish={cleanup(){if(animId)cancelAnimationFrame(animId)}};
 }
 
-function changeFishDifficulty(v){
-  if(window._fish)window._fish.setDifficulty(v);
-}
-
-function toggleFishFullscreen(){
-  alert('捕鱼达人全屏模式开发中，敬请期待～');
-}
-
-// ====== CHART TOOL ======
+// ====== CHART ======
 let chartInst=null;
 function renderChartTool(ct){
   ct.innerHTML=`
     <div class="chart-controls">
-      <select id="chart-type">
-        <option value="scatter">散点图</option>
-        <option value="line" selected>折线图</option>
-        <option value="bar">柱状图</option>
-        <option value="pie">饼图</option>
-      </select>
-      <button class="btn-go" onclick="drawChart()">生成图表</button>
-      <label class="btn-ghost btn-small" style="cursor:pointer;border:1.5px solid var(--border);color:var(--text)">📁 上传 CSV<input type="file" accept=".csv,.tsv,.txt" onchange="uploadCSV(event)" hidden></label>
-      <button class="btn-ghost btn-small" style="color:var(--text)" onclick="loadSample()">试试示例</button>
+      <select id="chart-type"><option value="scatter">散点图</option><option value="line" selected>折线图</option><option value="bar">柱状图</option><option value="pie">饼图</option></select>
+      <button class="btn-full" onclick="drawChart()">生成图表</button>
+      <label class="btn-ghost btn-sm" style="cursor:pointer;border:1.5px solid var(--border);color:var(--text)">📁 上传 CSV<input type="file" accept=".csv,.tsv,.txt" onchange="uploadCSV(event)" hidden></label>
+      <button class="btn-ghost btn-sm" style="color:var(--text)" onclick="loadSample()">试试示例</button>
     </div>
-    <textarea class="data-input" id="data-input" placeholder="粘贴数据，格式如：&#10;月份,销售额,利润&#10;1月,120,30&#10;2月,150,42&#10;…"></textarea>
+    <textarea class="data-input" id="data-input" placeholder="粘贴数据，格式如：月份,销售额,利润&#10;1月,120,30&#10;2月,150,42&#10;…"></textarea>
     <div id="chart-wrap"><canvas id="data-chart"></canvas></div>
   `;
   loadSample();
 }
 
 function parseCSV(text){
-  const lines=text.trim().split('\n').filter(l=>l.trim());
-  if(lines.length<2)return null;
-  const d=lines[0].includes('\t')?'\t':',';
-  const headers=lines[0].split(d).map(h=>h.trim());
-  const rows=lines.slice(1).map(l=>l.split(d).map(v=>v.trim()));
-  const numCols=[];
+  const lines=text.trim().split('\n').filter(l=>l.trim());if(lines.length<2)return null;
+  const d=lines[0].includes('\t')?'\t':',',headers=lines[0].split(d).map(h=>h.trim()),rows=lines.slice(1).map(l=>l.split(d).map(v=>v.trim())),numCols=[];
   for(let i=0;i<headers.length;i++){if(rows.every(r=>!isNaN(parseFloat(r[i]))&&r[i]!==''))numCols.push(i)}
   return{headers,rows,numCols};
 }
-
 function palette(n){const b=['#0071e3','#ff3b30','#30d158','#ff9f0a','#5e5ce6','#64d2ff','#ff375f','#ac8e68'];return Array.from({length:n},(_,i)=>b[i%b.length])}
 
 function drawChart(){
-  const text=document.getElementById('data-input')?.value.trim();
-  if(!text){alert('请先粘贴数据或上传文件');return}
+  const text=document.getElementById('data-input')?.value.trim();if(!text){alert('请先粘贴数据或上传文件');return}
   const p=parseCSV(text);if(!p){alert('数据格式不正确');return}
-  const type=document.getElementById('chart-type')?.value||'line';
-  const{headers,rows,numCols}=p;
-
+  const type=document.getElementById('chart-type')?.value||'line',{headers,rows,numCols}=p;
   if(chartInst)chartInst.destroy();
   const ctx=document.getElementById('data-chart').getContext('2d');
-
-  if(type==='pie'){
-    const col=numCols[0];
-    chartInst=new Chart(ctx,{type,data:{labels:rows.map(r=>r[0]),datasets:[{data:rows.map(r=>parseFloat(r[col])||0),backgroundColor:palette(rows.length)}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}});
-    return;
-  }
-  if(type==='scatter'){
-    const xc=numCols[0]??0,yc=numCols[1]??1;
-    chartInst=new Chart(ctx,{type,data:{datasets:[{label:headers[yc]||'Y',data:rows.map(r=>({x:parseFloat(r[xc])||0,y:parseFloat(r[yc])||0})),backgroundColor:'#0071e3',pointRadius:5}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{title:{display:true,text:headers[xc]||'X'}},y:{title:{display:true,text:headers[yc]||'Y'}}}}});
-    return;
-  }
-  const labels=rows.map(r=>r[0]);
-  const colors=palette(numCols.length);
+  if(type==='pie'){chartInst=new Chart(ctx,{type,data:{labels:rows.map(r=>r[0]),datasets:[{data:rows.map(r=>parseFloat(r[numCols[0]])||0),backgroundColor:palette(rows.length)}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right'}}}});return}
+  if(type==='scatter'){const xc=numCols[0]??0,yc=numCols[1]??1;chartInst=new Chart(ctx,{type,data:{datasets:[{label:headers[yc]||'Y',data:rows.map(r=>({x:parseFloat(r[xc])||0,y:parseFloat(r[yc])||0})),backgroundColor:'#0071e3',pointRadius:5}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{title:{display:true,text:headers[xc]||'X'}},y:{title:{display:true,text:headers[yc]||'Y'}}}}});return}
+  const labels=rows.map(r=>r[0]),colors=palette(numCols.length);
   const datasets=numCols.map((ci,i)=>({label:headers[ci],data:rows.map(r=>parseFloat(r[ci])||0),borderColor:colors[i],backgroundColor:type==='bar'?colors[i]+'99':'transparent',borderWidth:2,tension:type==='line'?0.3:undefined}));
   chartInst=new Chart(ctx,{type,data:{labels,datasets},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true}}}});
 }
-
-function uploadCSV(e){
-  const f=e.target.files[0];if(!f)return;
-  const r=new FileReader();r.onload=ev=>{const ta=document.getElementById('data-input');if(ta)ta.value=ev.target.result;e.target.value=''};r.readAsText(f);
-}
-
+function uploadCSV(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{const ta=document.getElementById('data-input');if(ta)ta.value=ev.target.result;e.target.value=''};r.readAsText(f)}
 function loadSample(){
   const type=document.getElementById('chart-type')?.value||'line';
-  const samples={scatter:'身高(cm),体重(kg)\n160,55\n165,60\n170,63\n175,68\n180,74\n185,80\n190,88',line:'月份,销售额,利润\n1月,120,30\n2月,150,42\n3月,180,55\n4月,140,38\n5月,200,62\n6月,230,75',bar:'城市,PM2.5\n北京,58\n上海,35\n广州,28\n深圳,22\n成都,48\n武汉,42',pie:'类别,支出\n餐饮,3200\n交通,1500\n购物,2800\n房租,5000\n娱乐,1200'};
-  const ta=document.getElementById('data-input');if(ta)ta.value=samples[type]||samples.line;
-  drawChart();
+  const s={scatter:'身高(cm),体重(kg)\n160,55\n165,60\n170,63\n175,68\n180,74\n185,80\n190,88',line:'月份,销售额,利润\n1月,120,30\n2月,150,42\n3月,180,55\n4月,140,38\n5月,200,62\n6月,230,75',bar:'城市,PM2.5\n北京,58\n上海,35\n广州,28\n深圳,22\n成都,48\n武汉,42',pie:'类别,支出\n餐饮,3200\n交通,1500\n购物,2800\n房租,5000\n娱乐,1200'};
+  const ta=document.getElementById('data-input');if(ta)ta.value=s[type]||s.line;drawChart();
 }
 
 // ====== BLOG ======
 const posts=[
-  {id:1,date:'2026-06-10',emoji:'🏔️',title:'周末徒步：从城市到山野',excerpt:'沿着溪流走了 12 公里，海拔爬升 800 米。山顶的风吹散了所有疲惫。',content:'<p>周六早上六点出发，驱车两小时到达山脚。沿着溪流走了 12 公里，海拔爬升 800 米。</p><p>途中遇到了一只小松鼠，在松树上跳来跳去。中午在山腰的平台上吃了简单的三明治，喝了一口热咖啡——这可能是我今年喝过的最好喝的咖啡。</p><p>山顶的风很大，但是吹散了所有疲惫。站在那里往下看，城市变成了小小的积木。</p>'},
-  {id:2,date:'2026-06-05',emoji:'📊',title:'用 R 分析城市空气质量数据',excerpt:'抓取了最近一年的 AQI 数据，用 ggplot2 画了几张图，发现了一些有趣的变化规律。',content:'<p>最近对城市空气质量数据产生了兴趣，写了一个小脚本，从公开数据源抓取了最近一年的 AQI 数据。</p><p>用 R 的 ggplot2 做了一些可视化：按月聚合的 AQI 趋势、各站点对比热力图、周末 vs 工作日的差异分析。</p><p>最有趣的发现：每年 3-4 月空气质量短暂好转，11-12 月明显恶化。周期比预想的规律得多。</p>'},
-  {id:3,date:'2026-05-28',emoji:'☕',title:'尝试了十种手冲方式',excerpt:'V60、Chemex、法压壶… 用同一款豆子对比了十种冲煮方法，记录参数和口感。',content:'<p>为了找到最适合埃塞俄比亚耶加雪菲的冲煮方式，我做了一个小小的对照实验。</p><p>同一款豆子、同样的研磨度、同样的水温，换了十种不同的器具和方法。每种冲两杯，记录风味和口感评分。</p><p>结果意外：最便宜的 V60 拿了最高分，最贵的某品牌手冲壶反而垫底。工具不一定要贵。</p>'},
-  {id:4,date:'2026-05-20',emoji:'🎮',title:'写了一个贪吃蛇小游戏',excerpt:'周末花半天时间用 Canvas 撸了一个贪吃蛇，加了触控支持，还挺好玩的。',content:'<p>一直想自己写小游戏，这周末终于动手了。选了最经典的贪吃蛇，用 HTML5 Canvas 实现。</p><p>核心逻辑大概 200 行，边缘情况比预想多：撞墙、自碰、食物生成、暂停恢复、移动端触控……</p><p>写完之后发现比玩别人的游戏更有成就感。这就是创造的快乐吧。</p>'},
-  {id:5,date:'2026-05-12',emoji:'🌿',title:'阳台上种的第一批香草长大了',excerpt:'薄荷、迷迭香和罗勒，两个月从种子到餐桌——泡茶、烤肉、做意面都能用上。',content:'<p>两个月前种下的香草种子终于可以采摘了。薄荷长得最快，已经霸占了半个花盆。</p><p>第一次用自己种的薄荷泡茶，感觉真的不一样。迷迭香烤了羊排，也很搭。从种子到餐桌的过程，让人对食物多了一份敬畏。</p>'}
+  {id:1,date:'2026-06-10',emoji:'🏔️',title:'周末徒步：从城市到山野',excerpt:'沿着溪流走了 12 公里，海拔爬升 800 米。山顶的风吹散了所有疲惫。',content:'<p>周六早上六点出发，驱车两小时到达山脚。沿着溪流走了 12 公里，海拔爬升 800 米。</p><p>中午在山腰平台上吃了简单三明治，喝了一口热咖啡——这可能是今年最好喝的咖啡。</p><p>山顶的风很大，但吹散了所有疲惫。站在那里往下看，城市变成了小小的积木。</p>'},
+  {id:2,date:'2026-06-05',emoji:'📊',title:'用 R 分析城市空气质量数据',excerpt:'抓取了最近一年的 AQI 数据，用 ggplot2 画了几张图，发现了一些有趣的变化规律。',content:'<p>最近对城市空气质量数据产生了兴趣，写了一个小脚本从公开数据源抓取了最近一年的 AQI 数据。</p><p>用 ggplot2 做了可视化：按月聚合的 AQI 趋势、各站点对比热力图、周末 vs 工作日差异。</p><p>最有趣的发现：每年 3-4 月空气质量短暂好转，11-12 月明显恶化。周期比预想的规律。</p>'},
+  {id:3,date:'2026-05-28',emoji:'☕',title:'尝试了十种手冲方式',excerpt:'V60、Chemex、法压壶… 用同一款豆子对比了十种冲煮方法。',content:'<p>为了找到最适合埃塞俄比亚耶加雪菲的冲煮方式，我做了一个小小的对照实验。</p><p>同一款豆子、同样的研磨度、同样的水温，换了十种不同的器具。每种冲两杯，记录风味和评分。</p><p>结果意外：最便宜的 V60 拿了最高分，最贵的反而垫底。工具不一定要贵。</p>'},
+  {id:4,date:'2026-05-20',emoji:'🎮',title:'写了一个贪吃蛇小游戏',excerpt:'周末花半天时间用 Canvas 撸了一个贪吃蛇，加了触控支持，还挺好玩的。',content:'<p>一直想自己写小游戏，选了最经典的贪吃蛇，用 HTML5 Canvas 实现。</p><p>核心逻辑 200 行，边缘情况比预想多：撞墙、自碰、食物生成、暂停恢复、触控适配……</p><p>写完发现比玩别人的游戏更有成就感。这就是创造的快乐吧。</p>'},
+  {id:5,date:'2026-05-12',emoji:'🌿',title:'阳台上种的第一批香草长大了',excerpt:'薄荷、迷迭香和罗勒，两个月从种子到餐桌。',content:'<p>两个月前种下的香草种子终于可以采摘了。薄荷长得最快，霸占了半个花盆。</p><p>第一次用自己种的薄荷泡茶，感觉真的不一样。迷迭香烤了羊排，也很搭。</p>'}
 ];
-
 function renderBlog(){
   const g=document.getElementById('blog-grid');
-  g.innerHTML=posts.map(p=>`
-    <div class="blog-card fade-in" onclick="openPost(${p.id})">
-      <div class="img">${p.emoji}</div>
-      <div class="body"><div class="date">${p.date}</div><h3>${p.title}</h3><p>${p.excerpt}</p></div>
-    </div>
-  `).join('');
+  g.innerHTML=posts.map(p=>`<div class="blog-card fade-in" onclick="openPost(${p.id})"><div class="img">${p.emoji}</div><div class="body"><div class="date">${p.date}</div><h3>${p.title}</h3><p>${p.excerpt}</p></div></div>`).join('');
   g.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 }
-
 function openPost(id){
   const p=posts.find(b=>b.id===id);if(!p)return;
   const o=document.createElement('div');o.className='modal-overlay';
   o.innerHTML=`<div class="modal"><button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button><h2>${p.emoji} ${p.title}</h2><div class="date">${p.date}</div>${p.content}</div>`;
-  o.addEventListener('click',e=>{if(e.target===o)o.remove()});
-  document.body.appendChild(o);
+  o.addEventListener('click',e=>{if(e.target===o)o.remove()});document.body.appendChild(o);
 }
 renderBlog();
 
-// ====== INIT DEFAULT PANELS ======
+// ====== INIT ======
 renderSnake(document.getElementById('games-content'));
 renderChartTool(document.getElementById('tools-content'));
 
-// Scroll nav hide
+// Scroll nav
 let lastScroll=0;
 window.addEventListener('scroll',()=>{
   const nav=document.querySelector('nav'),cs=window.scrollY;
