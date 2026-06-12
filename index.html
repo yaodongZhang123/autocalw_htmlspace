@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Space</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --bg: #ffffff;
+  --text: #1d1d1f;
+  --text-secondary: #86868b;
+  --accent: #0071e3;
+  --card-bg: #fbfbfd;
+  --border: #d2d2d7;
+  --nav-bg: rgba(255,255,255,0.72);
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --transition: 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 17px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg); color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  height: 52px; display: flex; align-items: center; justify-content: center;
+}
+nav a {
+  color: var(--text-secondary); text-decoration: none; font-size: 0.82rem;
+  margin: 0 1.4rem; letter-spacing: 0.02em; transition: color var(--transition);
+}
+nav a:hover { color: var(--accent); }
+.nav-title { font-weight: 600; color: var(--text); margin-right: 2rem; font-size: 0.95rem; }
+
+/* ─── SECTIONS ─── */
+section { padding: 100px 24px; max-width: 1024px; margin: 0 auto; }
+section.full { max-width: none; padding-left: 0; padding-right: 0; }
+.sec-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 8px; font-weight: 600; }
+.sec-title { font-size: 3rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 20px; line-height: 1.15; }
+.sec-desc { font-size: 1.15rem; color: var(--text-secondary); max-width: 600px; line-height: 1.6; }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+  align-items: center; text-align: center; padding-top: 80px;
+  background: linear-gradient(180deg, #f5f5f7 0%, #ffffff 60%);
+}
+.hero h1 { font-size: clamp(3rem, 8vw, 5.5rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.05; }
+.hero p { font-size: 1.4rem; color: var(--text-secondary); margin-top: 1.2rem; max-width: 520px; }
+.hero .cta {
+  margin-top: 2.4rem; display: inline-flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+}
+.btn {
+  display: inline-block; padding: 14px 32px; border-radius: 28px; font-size: 0.95rem;
+  font-weight: 500; text-decoration: none; transition: all var(--transition); cursor: pointer; border: none;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #0077ed; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,113,227,0.3); }
+.btn-ghost { background: transparent; color: var(--accent); border: 1.5px solid var(--accent); }
+.btn-ghost:hover { background: var(--accent); color: #fff; }
+
+/* ─── BLOG CARDS ─── */
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; margin-top: 48px; }
+.blog-card {
+  background: var(--card-bg); border-radius: var(--radius); overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition); cursor: pointer;
+  border: 1px solid var(--border);
+}
+.blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.blog-card .img {
+  width: 100%; height: 200px; object-fit: cover;
+  background: linear-gradient(135deg, #e8e8ed 0%, #d2d2d7 100%);
+  display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 2.5rem;
+}
+.blog-card .body { padding: 20px; }
+.blog-card .date { font-size: 0.78rem; color: var(--text-secondary); }
+.blog-card h3 { font-size: 1.2rem; margin: 6px 0 8px; font-weight: 600; }
+.blog-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+
+/* ─── TOOLS ─── */
+.tool-section { background: #f5f5f7; border-radius: var(--radius); padding: 60px; margin-top: 48px; }
+.tool-section h3 { font-size: 1.8rem; font-weight: 600; margin-bottom: 12px; }
+.tool-section .desc { color: var(--text-secondary); margin-bottom: 32px; font-size: 1rem; }
+
+/* Snake */
+#snake-canvas { display: block; margin: 0 auto; border-radius: var(--radius-sm); background: #1d1d1f; cursor: pointer; max-width: 100%; }
+.snake-score { text-align: center; font-size: 1.3rem; font-weight: 600; margin-top: 16px; color: var(--text-secondary); }
+.snake-hint { text-align: center; font-size: 0.85rem; color: var(--text-secondary); margin-top: 8px; }
+
+/* Chart tool */
+.chart-controls { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+.chart-controls select, .chart-controls button, .chart-controls input {
+  padding: 10px 18px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  font-size: 0.9rem; background: #fff; cursor: pointer; font-family: inherit; color: var(--text);
+}
+.chart-controls select:focus, .chart-controls input:focus { outline: none; border-color: var(--accent); }
+.chart-controls button { background: var(--accent); color: #fff; border-color: var(--accent); font-weight: 500; }
+.chart-controls button:hover { background: #0077ed; }
+.chart-controls .file-btn { background: #fff; color: var(--text); border: 1.5px solid var(--border); }
+.chart-controls .file-btn:hover { border-color: var(--accent); color: var(--accent); background: #fff; }
+textarea.data-input {
+  width: 100%; height: 140px; border-radius: var(--radius-sm); border: 1.5px solid var(--border);
+  padding: 16px; font-family: "SF Mono", "Fira Code", "Consolas", monospace; font-size: 0.85rem;
+  resize: vertical; background: #fff; color: var(--text); line-height: 1.5;
+}
+textarea.data-input:focus { outline: none; border-color: var(--accent); }
+#chart-container { margin-top: 24px; position: relative; height: 360px; }
+#chart-container canvas { width: 100% !important; }
+
+/* ─── FOOTER ─── */
+footer {
+  text-align: center; padding: 40px 24px; color: var(--text-secondary); font-size: 0.82rem;
+  border-top: 1px solid var(--border); margin-top: 80px;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  section { padding: 64px 20px; }
+  .sec-title { font-size: 2.2rem; }
+  .tool-section { padding: 28px 20px; }
+  .hero h1 { font-size: 2.8rem; }
+  nav a { margin: 0 0.7rem; font-size: 0.75rem; }
+  .blog-grid { grid-template-columns: 1fr; }
+}
+
+/* Fade-in animation */
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* Modal for blog detail */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 200;
+  display: flex; align-items: center; justify-content: center; padding: 24px;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.modal {
+  background: #fff; border-radius: var(--radius); max-width: 680px; width: 100%;
+  max-height: 85vh; overflow-y: auto; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  position: relative;
+}
+.modal-close {
+  position: absolute; top: 16px; right: 20px; background: none; border: none;
+  font-size: 1.6rem; cursor: pointer; color: var(--text-secondary); line-height: 1;
+}
+.modal h2 { font-size: 1.8rem; margin-bottom: 12px; }
+.modal .date { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 24px; }
+.modal p { line-height: 1.8; color: var(--text); margin-bottom: 16px; }
+
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <span class="nav-title">MY SPACE</span>
+  <a href="#home">首页</a>
+  <a href="#blog">记录</a>
+  <a href="#tools">工具</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="full hero" id="home">
+  <h1 class="fade-in">用数据看世界，<br>用代码讲故事。</h1>
+  <p class="fade-in">这里记录我的生活片段、数据分析探索，以及一些亲手打造的小工具。</p>
+  <div class="cta fade-in">
+    <a href="#blog" class="btn btn-primary">看看记录</a>
+    <a href="#tools" class="btn btn-ghost">试试工具</a>
+  </div>
+</section>
+
+<!-- ─── BLOG ─── -->
+<section id="blog">
+  <div class="fade-in">
+    <div class="sec-label">LIFE LOG</div>
+    <h2 class="sec-title">生活记录</h2>
+    <p class="sec-desc">一些值得记录的瞬间、思考和探索。点击卡片查看更多。</p>
+  </div>
+  <div class="blog-grid fade-in" id="blog-grid"></div>
+</section>
+
+<!-- ─── TOOLS ─── -->
+<section id="tools">
+  <div class="fade-in">
+    <div class="sec-label">TOOLKIT</div>
+    <h2 class="sec-title">小工具</h2>
+    <p class="sec-desc">自己做的工具，顺手、干净、没广告。</p>
+  </div>
+
+  <!-- Snake -->
+  <div class="tool-section fade-in">
+    <h3>🐍 贪吃蛇</h3>
+    <p class="desc">经典小游戏。点击画布开始，方向键或 WASD 控制方向。</p>
+    <canvas id="snake-canvas" width="400" height="400"></canvas>
+    <div class="snake-score">得分：<span id="snake-score">0</span></div>
+    <div class="snake-hint">🏆 最高分：<span id="snake-best">0</span> &nbsp;|&nbsp; 按空格暂停</div>
+  </div>
+
+  <!-- Chart -->
+  <div class="tool-section fade-in" style="margin-top:32px">
+    <h3>📊 数据作图</h3>
+    <p class="desc">粘贴表格数据或上传 CSV 文件，自动生成图表。支持散点图、折线图、柱状图、饼图。</p>
+    <div class="chart-controls">
+      <select id="chart-type">
+        <option value="scatter">散点图</option>
+        <option value="line">折线图</option>
+        <option value="bar">柱状图</option>
+        <option value="pie">饼图</option>
+      </select>
+      <button onclick="renderChart()">生成图表</button>
+      <label class="btn file-btn" style="cursor:pointer">
+        📁 上传 CSV
+        <input type="file" accept=".csv,.tsv,.txt" onchange="handleFileUpload(event)" hidden>
+      </label>
+      <button class="btn-ghost" style="background:transparent;border:1.5px solid var(--border);color:var(--text);padding:10px 18px;font-size:0.9rem;border-radius:var(--radius-sm)" onclick="loadSample()">试试示例数据</button>
+    </div>
+    <textarea class="data-input" id="data-input" placeholder="粘贴数据，格式如：&#10;月份,销售额,利润&#10;1月,120,30&#10;2月,150,42&#10;3月,180,55&#10;…&#10;（第一行为列名，逗号或 Tab 分隔）"></textarea>
+    <div id="chart-container"><canvas id="data-chart"></canvas></div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with ❤️ · © 2026 My Space</p>
+</footer>
+
+<script>
+// ─── FADE-IN OBSERVER ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ─── BLOG DATA ───
+const blogPosts = [
+  {
+    id: 1, date: '2026-06-10', emoji: '🏔️',
+    title: '周末徒步：从城市到山野',
+    excerpt: '沿着溪流走了 12 公里，海拔爬升 800 米。山顶的风吹散了所有疲惫。',
+    content: '<p>周六早上六点出发，驱车两小时到达山脚。沿着溪流走了 12 公里，海拔爬升 800 米。</p><p>途中遇到了一只小松鼠，在松树上跳来跳去。中午在山腰的平台上吃了简单的三明治，喝了一口热咖啡——这可能是我今年喝过的最好喝的咖啡。</p><p>山顶的风很大，但是吹散了所有疲惫。站在那里往下看，城市变成了小小的积木。下山的时候膝盖有点疼，但心里很满足。</p>'
+  },
+  {
+    id: 2, date: '2026-06-05', emoji: '📊',
+    title: '用 R 分析城市空气质量数据',
+    excerpt: '抓取了最近一年的 AQI 数据，用 ggplot2 画了几张图，发现了一些有趣的变化规律。',
+    content: '<p>最近对城市空气质量数据产生了兴趣，于是写了一个小脚本，从公开数据源抓取了最近一年的 AQI 数据。</p><p>用 R 的 ggplot2 做了一些可视化：按月份聚合的平均 AQI 趋势、各监测站点的对比热力图、以及周末 vs 工作日的差异分析。</p><p>最有趣的发现是：每年 3-4 月有一个短暂的好转期（可能和季风有关），而 11-12 月则明显恶化。这个周期性比我预想的要规律得多。</p>'
+  },
+  {
+    id: 3, date: '2026-05-28', emoji: '☕',
+    title: '尝试了十种手冲方式',
+    excerpt: 'V60、Chemex、法压壶… 用同一款豆子对比了十种冲煮方法，记录参数和口感。',
+    content: '<p>为了找到最适合埃塞俄比亚耶加雪菲的冲煮方式，我做了一个小小的对照实验。</p><p>同一款豆子、同样的研磨度、同样的水温，但是换了十种不同的器具和方法。每种方法冲两杯，记录风味词和口感评分。</p><p>结果有点意外：最便宜的 V60 居然拿到了最高分，而最贵的某品牌手冲壶反而垫底。看来工具不一定要贵，适合的才是最好的。</p>'
+  },
+  {
+    id: 4, date: '2026-05-20', emoji: '🎮',
+    title: '写了一个贪吃蛇小游戏',
+    excerpt: '周末花半天时间用 Canvas 撸了一个贪吃蛇，加了移动端支持，还挺好玩的。',
+    content: '<p>一直想自己写一个小游戏，这周末终于动手了。选了最经典的贪吃蛇，用 HTML5 Canvas 实现。</p><p>核心逻辑大概 200 行，但边缘情况的处理比预想的多：撞墙检测、自碰检测、食物不能生成在蛇身上、暂停恢复、移动端触控适配……</p><p>写完之后发现比玩别人的游戏更有成就感。这就是创造的快乐吧。</p>'
+  },
+  {
+    id: 5, date: '2026-05-12', emoji: '🌿',
+    title: '阳台上种的第一批香草长大了',
+    excerpt: '薄荷、迷迭香和罗勒，两个月从种子到餐桌——泡茶、烤肉、做意面都能用上。',
+    content: '<p>两个月前种下的香草种子，终于可以采摘了。薄荷长得最快，已经霸占了半个花盆；迷迭香比较慢热，但香气很浓；罗勒需要多晒太阳。</p><p>第一次用自己种的薄荷泡茶，那种感觉真的不一样。迷迭香烤了羊排，也很搭。这种从种子到餐桌的过程，让人对食物多了一份敬畏。</p>'
+  }
+];
+
+function renderBlog() {
+  const grid = document.getElementById('blog-grid');
+  grid.innerHTML = blogPosts.map(p => `
+    <div class="blog-card fade-in" onclick="openPost(${p.id})">
+      <div class="img">${p.emoji}</div>
+      <div class="body">
+        <div class="date">${p.date}</div>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+      </div>
+    </div>
+  `).join('');
+  document.querySelectorAll('#blog-grid .fade-in').forEach(el => observer.observe(el));
+}
+
+function openPost(id) {
+  const p = blogPosts.find(b => b.id === id);
+  if (!p) return;
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.innerHTML = `
+    <div class="modal">
+      <button class="modal-close" onclick="this.closest('.modal-overlay').remove()">✕</button>
+      <h2>${p.emoji} ${p.title}</h2>
+      <div class="date">${p.date}</div>
+      ${p.content}
+    </div>
+  `;
+  overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+  document.body.appendChild(overlay);
+}
+renderBlog();
+
+// ─── SNAKE ───
+const canvas = document.getElementById('snake-canvas');
+const ctx = canvas.getContext('2d');
+const gridSize = 20;
+const tileCount = canvas.width / gridSize;
+
+let snake, food, direction, nextDirection, score, bestScore, gameLoop, running, paused;
+bestScore = parseInt(localStorage.getItem('snakeBest') || '0');
+document.getElementById('snake-best').textContent = bestScore;
+
+function initSnake() {
+  snake = [{x: 10, y: 10}, {x: 9, y: 10}, {x: 8, y: 10}];
+  direction = {x: 1, y: 0}; nextDirection = {x: 1, y: 0};
+  score = 0; running = true; paused = false;
+  document.getElementById('snake-score').textContent = '0';
+  placeFood();
+}
+
+function placeFood() {
+  do {
+    food = { x: Math.floor(Math.random() * tileCount), y: Math.floor(Math.random() * tileCount) };
+  } while (snake.some(s => s.x === food.x && s.y === food.y));
+}
+
+function drawSnake() {
+  ctx.fillStyle = '#1d1d1f'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+  for (let i = 0; i < tileCount; i++) {
+    ctx.beginPath(); ctx.moveTo(i * gridSize, 0); ctx.lineTo(i * gridSize, canvas.height); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(0, i * gridSize); ctx.lineTo(canvas.width, i * gridSize); ctx.stroke();
+  }
+
+  // Food
+  ctx.fillStyle = '#ff3b30'; ctx.shadowColor = '#ff3b30'; ctx.shadowBlur = 10;
+  ctx.beginPath();
+  ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/2 - 1, 0, Math.PI*2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Snake
+  snake.forEach((s, i) => {
+    const t = 1 - i / (snake.length + 8);
+    ctx.fillStyle = i === 0
+      ? '#30d158'
+      : `rgba(48,209,88,${0.25 + t * 0.75})`;
+    const pad = i === 0 ? 1 : 2;
+    ctx.fillRect(s.x * gridSize + pad, s.y * gridSize + pad, gridSize - pad*2, gridSize - pad*2);
+  });
+
+  // Eyes
+  const head = snake[0];
+  const cx = head.x * gridSize + gridSize/2, cy = head.y * gridSize + gridSize/2;
+  ctx.fillStyle = '#fff';
+  const ex = direction.x * 5, ey = direction.y * 5;
+  ctx.beginPath(); ctx.arc(cx + ex - 3, cy + ey - 3, 2.5, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(cx + ex + 3, cy + ey + 3, 2.5, 0, Math.PI*2); ctx.fill();
+}
+
+function updateSnake() {
+  if (paused) return;
+  direction = nextDirection;
+  const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+  // Wall collision
+  if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) { gameOver(); return; }
+  // Self collision
+  if (snake.some(s => s.x === head.x && s.y === head.y)) { gameOver(); return; }
+
+  snake.unshift(head);
+  if (head.x === food.x && head.y === food.y) {
+    score += 10;
+    document.getElementById('snake-score').textContent = score;
+    placeFood();
+  } else {
+    snake.pop();
+  }
+  drawSnake();
+}
+
+function gameOver() {
+  running = false;
+  if (score > bestScore) {
+    bestScore = score;
+    localStorage.setItem('snakeBest', bestScore);
+    document.getElementById('snake-best').textContent = bestScore;
+  }
+  ctx.fillStyle = 'rgba(0,0,0,0.65)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#fff'; ctx.font = 'bold 22px -apple-system, sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('游戏结束', canvas.width/2, canvas.height/2 - 10);
+  ctx.font = '15px -apple-system, sans-serif'; ctx.fillStyle = '#aaa';
+  ctx.fillText('得分: ' + score + '  |  点击重新开始', canvas.width/2, canvas.height/2 + 28);
+  ctx.textAlign = 'start';
+}
+
+canvas.addEventListener('click', () => { if (!running) { initSnake(); gameLoop = setInterval(updateSnake, 100); } });
+document.addEventListener('keydown', e => {
+  if (!running) return;
+  const key = e.key.toLowerCase();
+  if (key === ' ') { paused = !paused; e.preventDefault(); return; }
+  if (paused) return;
+  if ((key === 'arrowup' || key === 'w') && direction.y === 0) nextDirection = {x:0,y:-1};
+  if ((key === 'arrowdown' || key === 's') && direction.y === 0) nextDirection = {x:0,y:1};
+  if ((key === 'arrowleft' || key === 'a') && direction.x === 0) nextDirection = {x:-1,y:0};
+  if ((key === 'arrowright' || key === 'd') && direction.x === 0) nextDirection = {x:1,y:0};
+});
+
+// Touch support
+let touchStartX, touchStartY;
+canvas.addEventListener('touchstart', e => {
+  touchStartX = e.touches[0].clientX; touchStartY = e.touches[0].clientY;
+  e.preventDefault();
+});
+canvas.addEventListener('touchmove', e => { e.preventDefault(); });
+canvas.addEventListener('touchend', e => {
+  if (!running) return;
+  if (!touchStartX) return;
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  const dy = e.changedTouches[0].clientY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy)) {
+    if (dx > 0 && direction.x === 0) nextDirection = {x:1,y:0};
+    else if (dx < 0 && direction.x === 0) nextDirection = {x:-1,y:0};
+  } else {
+    if (dy > 0 && direction.y === 0) nextDirection = {x:0,y:1};
+    else if (dy < 0 && direction.y === 0) nextDirection = {x:0,y:-1};
+  }
+});
+initSnake(); drawSnake();
+
+// ─── CHART ───
+let chartInstance = null;
+
+function parseData(text) {
+  const lines = text.trim().split('\n').filter(l => l.trim());
+  if (lines.length < 2) return null;
+  const delim = lines[0].includes('\t') ? '\t' : ',';
+  const headers = lines[0].split(delim).map(h => h.trim());
+  const rows = lines.slice(1).map(line => line.split(delim).map(v => v.trim()));
+  const numericCols = [];
+  for (let i = 0; i < headers.length; i++) {
+    if (rows.every(r => !isNaN(parseFloat(r[i])) && r[i] !== '')) numericCols.push(i);
+  }
+  return { headers, rows, numericCols };
+}
+
+function renderChart() {
+  const text = document.getElementById('data-input').value.trim();
+  if (!text) { alert('请先粘贴数据或上传文件'); return; }
+  const parsed = parseData(text);
+  if (!parsed) { alert('数据格式不正确，至少需要表头和一行数据'); return; }
+
+  const type = document.getElementById('chart-type').value;
+  const { headers, rows, numericCols } = parsed;
+
+  if (type === 'pie') {
+    const col = numericCols[0];
+    const labels = rows.map(r => r[0]);
+    const values = rows.map(r => parseFloat(r[col]) || 0);
+    drawChart({ type: 'pie', data: { labels, datasets: [{ data: values, backgroundColor: palette(values.length) }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'right' } } } });
+    return;
+  }
+
+  if (type === 'scatter') {
+    if (numericCols.length < 2 && headers.length < 2) { alert('散点图需要至少两列数值数据'); return; }
+    const xCol = numericCols[0] ?? 0, yCol = numericCols[1] ?? 1;
+    const points = rows.map(r => ({ x: parseFloat(r[xCol]) || 0, y: parseFloat(r[yCol]) || 0 }));
+    drawChart({ type: 'scatter', data: { datasets: [{ label: headers[yCol] || 'Y', data: points, backgroundColor: '#0071e3', pointRadius: 5, pointHoverRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { x: { title: { display: true, text: headers[xCol] || 'X' } }, y: { title: { display: true, text: headers[yCol] || 'Y' } } } } });
+    return;
+  }
+
+  // Line / Bar
+  const labels = rows.map(r => r[0]);
+  const datasets = numericCols.map((ci, i) => ({
+    label: headers[ci],
+    data: rows.map(r => parseFloat(r[ci]) || 0),
+    borderColor: palette(1)[0],
+    backgroundColor: type === 'bar' ? palette(numericCols.length)[i] + '99' : 'transparent',
+    borderWidth: 2,
+    tension: type === 'line' ? 0.3 : undefined,
+    fill: type === 'line'
+  }));
+  // Fix: give each dataset its own color
+  const colors = palette(numericCols.length);
+  datasets.forEach((ds, i) => { ds.borderColor = colors[i]; if (type === 'bar') ds.backgroundColor = colors[i] + '99'; });
+
+  drawChart({ type, data: { labels, datasets }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' } }, scales: type === 'bar' || type === 'line' ? { y: { beginAtZero: true } } : {} } });
+}
+
+function drawChart(config) {
+  if (chartInstance) chartInstance.destroy();
+  const ctx = document.getElementById('data-chart').getContext('2d');
+  chartInstance = new Chart(ctx, config);
+}
+
+function palette(n) {
+  const base = ['#0071e3','#ff3b30','#30d158','#ff9f0a','#5e5ce6','#64d2ff','#ff375f','#ac8e68'];
+  return Array.from({length: n}, (_,i) => base[i % base.length]);
+}
+
+function handleFileUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('data-input').value = e.target.result;
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+function loadSample() {
+  const samples = {
+    'scatter': '身高(cm),体重(kg)\n160,55\n165,60\n170,63\n175,68\n180,74\n185,80\n190,88',
+    'line': '月份,销售额,利润\n1月,120,30\n2月,150,42\n3月,180,55\n4月,140,38\n5月,200,62\n6月,230,75',
+    'bar': '城市,PM2.5\n北京,58\n上海,35\n广州,28\n深圳,22\n成都,48\n武汉,42',
+    'pie': '类别,支出\n餐饮,3200\n交通,1500\n购物,2800\n房租,5000\n娱乐,1200'
+  };
+  const type = document.getElementById('chart-type').value;
+  document.getElementById('data-input').value = samples[type] || samples['line'];
+  renderChart();
+}
+
+// Mobile nav shrink on scroll
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  const currentScroll = window.scrollY;
+  if (currentScroll > 100 && currentScroll > lastScroll) {
+    nav.style.transform = 'translateY(-100%)';
+  } else {
+    nav.style.transform = 'translateY(0)';
+  }
+  lastScroll = currentScroll;
+});
+
+// Init
+loadSample();
+</script>
+</body>
+</html>
