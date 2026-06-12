@@ -228,7 +228,7 @@ function initNGLStage(){
   stage.handleResize();
   function loadPDB(id){
     stage.removeAllComponents();
-    stage.loadFile('rcsb://'+id.toUpperCase().trim(),{defaultRepresentation:false}).then(c=>{
+    stage.loadFile('https://files.rcsb.org/download/'+id.toUpperCase().trim()+'.pdb',{ext:'pdb',defaultRepresentation:false}).then(c=>{
       const style=document.getElementById('ngl-style')?.value||'cartoon';
       c.addRepresentation(style);c.autoView();
       c.addRepresentation('axes',{sele:'*',scale:0.04});
@@ -292,9 +292,16 @@ function renderMSAView(){
 let phyloLoaded=false;
 function renderPhylo(ct){
   ct.innerHTML=`
-    <p style="color:var(--text2);margin-bottom:12px">输入 Newick 格式的进化树，自动渲染。示例：(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);</p>
-    <textarea class="data-input" id="phylo-input" placeholder="Newick 格式，例如：(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);&#10;支持叶节点名称和分支长度" style="height:80px">(Human:0.05,Chimp:0.03,(Mouse:0.2,Rat:0.15):0.1,Fish:0.4);</textarea>
-    <div class="toolbar"><button class="btn-sm" id="phylo-render" style="background:var(--accent);color:#fff">渲染进化树</button></div>
+    <p style="color:var(--text2);margin-bottom:8px">输入 Newick 格式进化树。参考 MEGA 风格，支持矩形/圆形/辐射/对角线四种树形、有根/无根切换。</p>
+    <textarea class="data-input" id="phylo-input" placeholder="Newick 格式，例如：(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);&#10;支持叶节点名称和分支长度" style="height:70px">(Human:0.05,Chimp:0.03,(Mouse:0.2,Rat:0.15):0.1,Fish:0.4);</textarea>
+    <div class="toolbar">
+      <select id="phylo-type"><option value="rectangular" selected>矩形</option><option value="circular">圆形</option><option value="radial">辐射</option><option value="diagonal">对角线</option></select>
+      <select id="phylo-root"><option value="rooted" selected>有根树</option><option value="unrooted">无根树</option></select>
+      <label style="font-size:.85rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:4px"><input type="checkbox" id="phylo-labels" checked> 显示标签</label>
+      <label style="font-size:.85rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:4px"><input type="checkbox" id="phylo-scale" checked> 标尺</label>
+      <button class="btn-sm" id="phylo-render" style="background:var(--accent);color:#fff">渲染</button>
+      <button class="btn-sm" id="phylo-export" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">导出PNG</button>
+    </div>
     <div id="phylo-canvas"></div>
   `;
   loadPhylo();
@@ -309,16 +316,40 @@ function initPhylo(){
   const treeDiv=document.getElementById('phylo-canvas');if(!treeDiv)return;
   treeDiv.innerHTML='';
   if(cleanups.phyloTree){try{cleanups.phyloTree()}catch(e){}}
-  const tree=new Phylocanvas.Tree('phylo-canvas',{
-    source: document.getElementById('phylo-input')?.value||'(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);',
-    renderInternalLabels:false,showScaleBar:true,nodeSize:20,
-    styles:{branch:{lineWidth:2,strokeStyle:'#0071e3'},leaf:{fillStyle:'#30d158'}}
-  });
-  tree.on('loaded',()=>tree.fitInPanel());
+  let tree=null;
+  function createTree(newick){
+    if(tree){try{tree.destroy()}catch(e){}}
+    const type=document.getElementById('phylo-type')?.value||'rectangular';
+    const rooted=document.getElementById('phylo-root')?.value==='rooted';
+    const showLabels=document.getElementById('phylo-labels')?.checked!==false;
+    const showScale=document.getElementById('phylo-scale')?.checked!==false;
+    tree=new Phylocanvas.Tree('phylo-canvas',{
+      source:newick,treeType:type,rooted,
+      showLabels,showScaleBar:showScale,nodeSize:18,
+      padding:20,alignLabels:true,
+      styles:{branch:{lineWidth:2,strokeStyle:'#0071e3'},leaf:{fillStyle:'#30d158'},highlighted:{fillStyle:'#ff9500',strokeStyle:'#ff6b00',lineWidth:2}}
+    });
+    tree.on('loaded',()=>tree.fitInPanel());
+    tree.on('error',e=>alert('解析失败：'+e.message));
+    return tree;
+  }
+  const defaultSrc=document.getElementById('phylo-input')?.value||'(Human:0.05,Chimp:0.03,(Mouse:0.2,Rat:0.15):0.1,Fish:0.4);';
+  createTree(defaultSrc);
   document.getElementById('phylo-render').addEventListener('click',()=>{
     const src=document.getElementById('phylo-input')?.value.trim();
     if(!src)return alert('请先输入 Newick 格式');
-    try{tree.load(src);tree.on('loaded',()=>tree.fitInPanel())}catch(e){alert('Newick 格式解析失败：'+e.message)}
+    createTree(src);
+  });
+  ['phylo-type','phylo-root','phylo-labels','phylo-scale'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    el.addEventListener('change',()=>{
+      const src=document.getElementById('phylo-input')?.value.trim()||defaultSrc;
+      createTree(src);
+    });
+  });
+  document.getElementById('phylo-export').addEventListener('click',()=>{
+    if(!tree)return;
+    tree.exportImage({format:'png'}).then(url=>{const a=document.createElement('a');a.href=url;a.download='phylo-tree.png';a.click()}).catch(()=>alert('导出失败'));
   });
   cleanups.phyloTree=()=>{try{tree.destroy()}catch(e){}};
 }
@@ -328,11 +359,22 @@ let volcChart=null;
 function renderVolcano(ct){
   ct.innerHTML=`
     <p style="color:var(--text2);margin-bottom:12px">粘贴差异表达数据（gene, log2FC, pvalue），自动绘制火山图。|log2FC|>1 且 p<0.05 标色。</p>
-    <textarea class="data-input" id="volc-input" placeholder="gene,log2FC,pvalue&#10;GeneA,2.5,0.001&#10;GeneB,-1.8,0.0005&#10;GeneC,0.3,0.8&#10;GeneD,3.1,1e-6&#10;GeneE,-0.5,0.03&#10;（逗号分隔，至少3行）" style="height:140px">GeneA,2.5,0.001\nGeneB,-1.8,0.0005\nGeneC,0.3,0.8\nGeneD,1.2,0.04\nGeneE,3.1,0.00001\nGeneF,-0.5,0.03\nGeneG,-0.1,0.9\nGeneH,1.6,0.008\nGeneI,-2.2,0.0003\nGeneJ,0.05,0.7</textarea>
+    <textarea class="data-input" id="volc-input" placeholder="gene,log2FC,pvalue" style="height:120px"></textarea>
     <div class="toolbar"><button class="btn-sm" onclick="drawVolcano()" style="background:var(--accent);color:#fff">绘制火山图</button></div>
     <div class="volc-wrap"><canvas id="volc-chart"></canvas></div>
     <p style="color:var(--text2);font-size:.8rem;margin-top:6px">🔴 上调(FC>1,p<0.05) 🔵 下调(FC<-1,p<0.05) ⚫ 不显著</p>
   `;
+  // Generate 1000 sample genes
+  const ta=document.getElementById('volc-input');
+  if(ta){
+    let d='gene,log2FC,pvalue\n';
+    for(let i=1;i<=1000;i++){
+      const fc=(Math.random()-0.5)*8;
+      const pv=Math.pow(10,-Math.random()*6);
+      d+='Gene'+i+','+fc.toFixed(3)+','+pv.toExponential(3)+'\n';
+    }
+    ta.value=d;
+  }
   drawVolcano();
 }
 function drawVolcano(){
