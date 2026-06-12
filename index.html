@@ -67,7 +67,7 @@ section{padding:100px 24px;max-width:1100px;margin:0 auto}
 .msa-wrap .consensus{font-weight:700;border-top:1px solid var(--border);margin-top:4px;padding-top:4px}
 
 /* Volcano */
-.volc-wrap{position:relative;height:420px}
+.volc-wrap{position:relative;height:380px;max-width:800px;margin:0 auto}
 .volc-wrap canvas{width:100%!important}
 
 /* NGL */
@@ -330,7 +330,7 @@ function initPhylo(){
       styles:{branch:{lineWidth:2,strokeStyle:'#0071e3'},leaf:{fillStyle:'#30d158'},highlighted:{fillStyle:'#ff9500',strokeStyle:'#ff6b00',lineWidth:2}}
     });
     tree.on('loaded',()=>tree.fitInPanel());
-    tree.on('error',e=>alert('解析失败：'+e.message));
+    tree.on('error',()=>alert('解析失败，请检查 Newick 格式是否正确'));
     return tree;
   }
   const defaultSrc=document.getElementById('phylo-input')?.value||'(Human:0.05,Chimp:0.03,(Mouse:0.2,Rat:0.15):0.1,Fish:0.4);';
@@ -364,13 +364,16 @@ function renderVolcano(ct){
     <div class="volc-wrap"><canvas id="volc-chart"></canvas></div>
     <p style="color:var(--text2);font-size:.8rem;margin-top:6px">🔴 上调(FC>1,p<0.05) 🔵 下调(FC<-1,p<0.05) ⚫ 不显著</p>
   `;
-  // Generate 1000 sample genes
+  // Generate 1000 sample genes with proper volcano distribution
   const ta=document.getElementById('volc-input');
   if(ta){
     let d='gene,log2FC,pvalue\n';
+    // Box-Muller for normal distribution of fold changes (most near 0)
     for(let i=1;i<=1000;i++){
-      const fc=(Math.random()-0.5)*8;
-      const pv=Math.pow(10,-Math.random()*6);
+      const u1=Math.random()||0.001,u2=Math.random()||0.001;
+      const fc=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2)*2.5;
+      // p-value: log-uniform, weighted so most are non-significant
+      const pv=Math.pow(10,-Math.random()*7);
       d+='Gene'+i+','+fc.toFixed(3)+','+pv.toExponential(3)+'\n';
     }
     ta.value=d;
@@ -400,19 +403,22 @@ function drawVolcano(){
   volcChart=new Chart(ctx,{
     type:'scatter',
     data:{datasets:[
-      {label:'上调',data:up,backgroundColor:'#ff3b30',pointRadius:5,pointHoverRadius:7},
-      {label:'下调',data:down,backgroundColor:'#0071e3',pointRadius:5,pointHoverRadius:7},
-      {label:'不显著',data:ns,backgroundColor:'#aaa',pointRadius:4,pointHoverRadius:6}
+      {label:'上调',data:up,backgroundColor:'#ff3b30',pointRadius:4,pointHoverRadius:6},
+      {label:'下调',data:down,backgroundColor:'#0071e3',pointRadius:4,pointHoverRadius:6},
+      {label:'不显著',data:ns,backgroundColor:'#bbb',pointRadius:3,pointHoverRadius:5},
+      {label:'',data:[{x:-(Math.max(...valid.map(p=>Math.abs(p.fc)))+1),y:1.301},{x:(Math.max(...valid.map(p=>Math.abs(p.fc)))+1),y:1.301}],borderColor:'#ccc',borderDash:[6,4],borderWidth:1,pointRadius:0,showLine:true,order:0},
+      {label:'',data:[{x:-1,y:0},{x:-1,y:maxY*1.1}],borderColor:'#ddd',borderDash:[4,4],borderWidth:0.8,pointRadius:0,showLine:true,order:0},
+      {label:'',data:[{x:1,y:0},{x:1,y:maxY*1.1}],borderColor:'#ddd',borderDash:[4,4],borderWidth:0.8,pointRadius:0,showLine:true,order:0}
     ]},
     options:{
       responsive:true,maintainAspectRatio:false,
       plugins:{
-        tooltip:{callbacks:{label(ctx){return ctx.raw.label+' (FC:'+ctx.raw.x.toFixed(2)+', p:'+Math.pow(10,-ctx.raw.y).toExponential(2)+')'}}},
-        annotation:!window.ChartAnnotation?undefined:{annotations:{hLine:{type:'line',yMin:1.301,yMax:1.301,borderColor:'#aaa',borderDash:[5,5],borderWidth:1,label:{display:true,content:'p=0.05'}}}}
+        tooltip:{callbacks:{label(ctx){return ctx.raw.label?ctx.raw.label+' (FC:'+ctx.raw.x.toFixed(2)+', p:'+Math.pow(10,-ctx.raw.y).toExponential(2)+')':''}}},
+        legend:{labels:{filter(item){return item.text!==''}}}
       },
       scales:{
-        x:{title:{display:true,text:'log2(Fold Change)',font:{weight:'bold'}},grid:{color:'#e0e0e0'}},
-        y:{title:{display:true,text:'-log10(p-value)',font:{weight:'bold'}},grid:{color:'#e0e0e0'},max:maxY*1.1}
+        x:{title:{display:true,text:'log2(Fold Change)',font:{weight:'bold'}},grid:{display:false}},
+        y:{title:{display:true,text:'-log10(p-value)',font:{weight:'bold'}},grid:{display:false},max:maxY*1.1}
       }
     }
   });
