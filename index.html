@@ -37,45 +37,21 @@ section{padding:100px 24px;max-width:1100px;margin:0 auto}
 .sidebar .item.active{background:var(--accent);color:#fff;font-weight:500}
 .content-panel{flex:1;min-width:0}
 
-.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:20px}
-.toolbar select,.toolbar button{padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-size:.85rem;background:#fff;cursor:pointer;font-family:inherit;color:var(--text)}
-.toolbar select:focus{outline:none;border-color:var(--accent)}
-.toolbar button.btn-full{background:var(--accent);color:#fff;border-color:var(--accent)}
-.toolbar button.btn-full:hover{background:#0077ed}
+.game-frame{border-radius:var(--radius-sm);border:1px solid var(--border);max-width:100%;background:#fafafa}
 
-/* Game wrapper for fullscreen */
-.game-wrapper{position:relative}
-.game-wrapper:fullscreen,.game-wrapper:-webkit-full-screen{background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;gap:16px}
-.game-wrapper:fullscreen .fs-hide,.game-wrapper:-webkit-full-screen .fs-hide{display:none}
-.game-wrapper:fullscreen .fs-show,.game-wrapper:-webkit-full-screen .fs-show{display:flex!important}
-.fs-show{display:none!important}
-.fs-info{color:#fff;font-size:1.1rem;gap:20px;align-items:center;flex-wrap:wrap;justify-content:center}
-.fs-exit{position:fixed;top:16px;right:24px;z-index:600;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 18px;border-radius:20px;cursor:pointer;font-family:inherit;font-size:.9rem;display:none}
-.game-wrapper:fullscreen .fs-exit,.game-wrapper:-webkit-full-screen .fs-exit{display:block}
+/* Tetris / Minesweeper / Sudoku shared */
+.gcanvas{display:block;margin:0 auto;border-radius:var(--radius-sm);max-width:100%;cursor:pointer}
+.ginfo{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:12px;flex-wrap:wrap;justify-content:center}
 
-/* Snake */
-.snake-wrap canvas{display:block;border-radius:var(--radius-sm);background:#1d1d1f;max-width:100%}
-.snake-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:12px}
+/* Sudoku grid */
+.sudoku-grid{display:grid;grid-template-columns:repeat(9,1fr);max-width:414px;margin:0 auto;gap:0;border:2px solid var(--text)}
+.sudoku-grid input{width:100%;aspect-ratio:1;text-align:center;font-size:1.2rem;font-weight:500;border:0.5px solid #d2d2d7;font-family:inherit;color:var(--text);background:#fff;cursor:pointer;border-radius:0}
+.sudoku-grid input:focus{outline:none;background:#e8f0fe;z-index:1;position:relative}
+.sudoku-grid input.given{color:var(--text2);font-weight:600;background:#f5f5f7}
+.sudoku-grid input:nth-child(3n){border-right:2px solid var(--text)}
+.sudoku-grid input:nth-child(n+19):nth-child(-n+27),
+.sudoku-grid input:nth-child(n+46):nth-child(-n+54){border-bottom:2px solid var(--text)}
 
-/* Mahjong */
-.mj-grid{display:grid;gap:3px;justify-content:center;margin:0 auto}
-.mj-tile{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border-radius:8px;cursor:pointer;transition:all .15s;user-select:none;border:2px solid transparent;background:#f0f0f5}
-.mj-tile:hover{border-color:var(--accent);transform:scale(1.08);background:#fff}
-.mj-tile.selected{border-color:var(--accent);background:rgba(0,113,227,.12);transform:scale(1.1)}
-.mj-tile.matched{visibility:hidden}
-.mj-tile.empty{background:transparent;cursor:default;border-color:transparent}
-.mj-tile.empty:hover{transform:none;border-color:transparent}
-.mj-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:16px;justify-content:center}
-
-/* Fish */
-.fish-wrap canvas{display:block;border-radius:var(--radius-sm);background:linear-gradient(180deg,#0a1628 0%,#0d2137 40%,#0c1a2e 100%);max-width:100%;cursor:crosshair}
-.fish-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:12px}
-
-/* Gold */
-.gold-wrap canvas{display:block;border-radius:var(--radius-sm);background:linear-gradient(180deg,#3d2817 0%,#6b4423 40%,#4a2c0e 100%);max-width:100%;cursor:pointer}
-.gold-info{display:flex;gap:20px;font-size:.9rem;color:var(--text2);margin-top:12px;flex-wrap:wrap}
-
-/* Blog */
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
 .blog-card{background:var(--card);border-radius:var(--radius);overflow:hidden;transition:transform var(--trans),box-shadow var(--trans);cursor:pointer;border:1px solid var(--border)}
 .blog-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
@@ -85,7 +61,6 @@ section{padding:100px 24px;max-width:1100px;margin:0 auto}
 .blog-card h3{font-size:1.15rem;margin:6px 0 8px;font-weight:600}
 .blog-card p{font-size:.88rem;color:var(--text2);line-height:1.5}
 
-/* Chart */
 textarea.data-input{width:100%;height:130px;border-radius:var(--radius-sm);border:1.5px solid var(--border);padding:14px;font-family:"SF Mono","Fira Code",Consolas,monospace;font-size:.85rem;resize:vertical;background:#fff;color:var(--text);line-height:1.5}
 textarea.data-input:focus{outline:none;border-color:var(--accent)}
 .chart-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
@@ -128,7 +103,7 @@ footer{text-align:center;padding:36px 24px;color:var(--text2);font-size:.82rem;b
 
 <section class="hero fade-in" id="home">
   <h1>用数据看世界，<br>用代码讲故事。</h1>
-  <p>这里记录我的生活片段、数据分析探索，以及一些亲手打造的小工具和小游戏。</p>
+  <p>这里记录我的生活片段、数据分析探索，以及一些经典小游戏和小工具。</p>
   <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center">
     <a href="#games" class="btn btn-primary">🎮 玩玩游戏</a>
     <a href="#tools" class="btn btn-ghost">📊 试试工具</a>
@@ -136,13 +111,14 @@ footer{text-align:center;padding:36px 24px;color:var(--text2);font-size:.82rem;b
 </section>
 
 <section id="games">
-  <div class="fade-in"><div class="sec-label">GAMES</div><h2 class="sec-title">小游戏</h2><p class="sec-desc">闲时写的小游戏，点击游戏名切换，支持难度调节和全屏模式。</p></div>
+  <div class="fade-in"><div class="sec-label">GAMES</div><h2 class="sec-title">小游戏</h2><p class="sec-desc">5 款经典游戏，点击侧栏切换。全部开源可嵌入。</p></div>
   <div class="sidebar-layout fade-in">
     <div class="sidebar"><div class="cat-title">游戏列表</div>
-      <button class="item active" data-panel="snake-panel">🐍 贪吃蛇</button>
-      <button class="item" data-panel="mahjong-panel">🀄 连连看</button>
-      <button class="item" data-panel="gold-panel">⛏ 黄金矿工</button>
-      <button class="item" data-panel="fish-panel">🐟 捕鱼达人</button>
+      <button class="item active" data-panel="p2048">🔢 2048</button>
+      <button class="item" data-panel="pfloppy">🐤 Flappy Bird</button>
+      <button class="item" data-panel="ptetris">🧱 俄罗斯方块</button>
+      <button class="item" data-panel="pmine">💣 扫雷</button>
+      <button class="item" data-panel="psudoku">🧩 数独</button>
     </div>
     <div class="content-panel" id="games-content"></div>
   </div>
@@ -171,446 +147,302 @@ const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.tar
 document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
 
 // ====== SIDEBAR ======
+const gameCleanups={};
 document.querySelectorAll('.sidebar').forEach(sb=>{
   sb.addEventListener('click',e=>{
     const btn=e.target.closest('.item');if(!btn)return;
     sb.querySelectorAll('.item').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
+    const id=btn.dataset.panel;
     const c=sb.closest('section').querySelector('.content-panel');
-    if(c)renderPanel(c,btn.dataset.panel);
+    if(c&&renderPanel(c,id))return;
   });
 });
 
-const panelMap={};
 function renderPanel(c,id){
-  // cleanup old game loops
-  Object.values(panelMap).forEach(g=>{if(g.cleanup)g.cleanup()});
-  const fns={'snake-panel':renderSnake,'mahjong-panel':renderMahjong,'fish-panel':renderFish,'gold-panel':renderGold,'chart-panel':renderChartTool};
-  const fn=fns[id];if(fn)fn(c);
+  Object.values(gameCleanups).forEach(fn=>{try{fn()}catch(e){}});
+  const map={
+    p2048:()=>c.innerHTML='<iframe class="game-frame" src="https://gabrielecirulli.github.io/2048/" width="500" height="560" style="border:none;display:block;margin:0 auto;max-width:100%"></iframe><p style="text-align:center;margin-top:8px;color:var(--text2);font-size:.85rem">方向键移动 · 合并数字直到 2048</p>',
+    pfloppy:()=>c.innerHTML='<iframe class="game-frame" src="https://nebez.github.io/floppybird/" width="420" height="540" style="border:none;display:block;margin:0 auto;max-width:100%"></iframe><p style="text-align:center;margin-top:8px;color:var(--text2);font-size:.85rem">空格/点击 飞行 · 躲避管道</p>',
+    ptetris:renderTetris,
+    pmine:renderMinesweeper,
+    psudoku:renderSudoku,
+    'chart-panel':renderChartTool,
+  };
+  const fn=map[id];if(fn){fn(c);return true}
 }
 
-// ====== FULLSCREEN HELPER ======
-function setupFullscreen(btnSelector,wrapperSelector){
-  const btn=document.querySelector(btnSelector),w=document.querySelector(wrapperSelector);
-  if(!btn||!w)return;
-  btn.addEventListener('click',()=>{
-    if(document.fullscreenElement){document.exitFullscreen();return}
-    if(w.requestFullscreen)w.requestFullscreen().catch(()=>{});
-    else if(w.webkitRequestFullscreen)w.webkitRequestFullscreen();
-  });
-  // exit button
-  w.querySelectorAll('.fs-exit').forEach(b=>b.addEventListener('click',()=>{if(document.fullscreenElement)document.exitFullscreen()}));
-}
-
-// ====== SNAKE ======
-function renderSnake(ct){
+// ====== TETRIS ======
+function renderTetris(ct){
   ct.innerHTML=`
-    <div class="toolbar fs-hide">
-      <select id="snake-diff"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select>
-      <button class="btn-full fs-hide" id="snake-fs-btn">⛶ 全屏</button>
+    <div style="text-align:center;margin-bottom:12px">
+      <button class="btn btn-sm" id="tetris-start" style="background:var(--accent);color:#fff;border:none;margin-right:8px">开始 / 重新开始</button>
     </div>
-    <div class="game-wrapper snake-wrap" id="snake-wrapper">
-      <div class="fs-show fs-info"><span>得分：<strong id="snake-score-fs">0</strong></span><span>🏆 <strong id="snake-best-fs">0</strong></span><select id="snake-diff-fs"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select></div>
-      <button class="fs-exit" id="snake-fs-exit">✕ 退出全屏</button>
-      <canvas id="snake-game" width="540" height="540"></canvas>
-    </div>
-    <div class="snake-info fs-hide"><span>得分：<strong id="snake-score">0</strong></span><span>🏆 最高分：<strong id="snake-best">0</strong></span><span>方向键/WASD · 空格暂停</span></div>
+    <canvas class="gcanvas" id="tetris-cv" width="300" height="600"></canvas>
+    <div class="ginfo"><span>得分：<strong id="tetris-score">0</strong></span><span>消除行：<strong id="tetris-lines">0</strong></span><span>←↓→ / ↑旋转 / 空格硬降</span></div>
   `;
-  initSnake();
-  setupFullscreen('#snake-fs-btn','#snake-wrapper');
+  initTetris();
 }
+function initTetris(){
+  const cv=document.getElementById('tetris-cv'),ctx=cv.getContext('2d');
+  const COLS=10,ROWS=20,BS=30;
+  let board=Array.from({length:ROWS},()=>Array(COLS).fill(0));
+  const PIECES=[
+    [[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]],[[1,1,0],[0,1,1]],[[0,1,1],[1,1,0]]
+  ];
+  const COLORS=['','#00e5ff','#ffd700','#bf5af2','#0071e3','#ff9500','#30d158','#ff375f'];
+  let piece,px,py,score=0,lines=0,gameOver=false,interval=null;
 
-function initSnake(){
-  const c=document.getElementById('snake-game'),ctx=c.getContext('2d');
-  const W=540,H=540,gs=30,tc=18;
-  const speeds={easy:140,medium:90,hard:50};
-  let snake=[{x:8,y:9},{x:7,y:9},{x:6,y:9}],dir={x:1,y:0},ndir={x:1,y:0};
-  let food,score=0,best=parseInt(localStorage.getItem('snakeBest')||'0'),loop=null,speed=speeds.medium,running=true,paused=false;
-  document.getElementById('snake-best').textContent=best;if(document.getElementById('snake-best-fs'))document.getElementById('snake-best-fs').textContent=best;
+  function spawn(){const id=1+Math.floor(Math.random()*7);piece=PIECES[id-1].map(r=>[...r]);px=Math.floor((COLS-piece[0].length)/2);py=0;if(!valid(px,py,piece)){gameOver=true;clearInterval(interval)}}
+  function valid(x,y,p){for(let r=0;r<p.length;r++)for(let c=0;c<p[r].length;c++){if(p[r][c]&&(y+r>=ROWS||x+c<0||x+c>=COLS||(y+r>=0&&board[y+r][x+c])))return false}return true}
+  function place(){for(let r=0;r<piece.length;r++)for(let c=0;c<piece[r].length;c++)if(piece[r][c]&&py+r>=0)board[py+r][px+c]=piece[r][c]}
 
-  function rfood(){do{food={x:Math.floor(Math.random()*tc),y:Math.floor(Math.random()*tc)}}while(snake.some(s=>s.x===food.x&&s.y===food.y))}
-  rfood();
+  function rotate(){const p=piece[0].map((_,i)=>piece.map(r=>r[i]).reverse());if(valid(px,py,p))piece=p}
 
-  function resize(){const ws=Math.min(c.parentElement.clientWidth-40,W);c.style.width=ws+'px';c.style.height=ws+'px'}
-  resize();window.addEventListener('resize',resize);
-
-  function draw(){
-    ctx.fillStyle='#1d1d1f';ctx.fillRect(0,0,W,H);
-    ctx.strokeStyle='rgba(255,255,255,0.025)';
-    for(let i=0;i<tc;i++){ctx.beginPath();ctx.moveTo(i*gs,0);ctx.lineTo(i*gs,H);ctx.stroke();ctx.beginPath();ctx.moveTo(0,i*gs);ctx.lineTo(W,i*gs);ctx.stroke()}
-    ctx.fillStyle='#ff3b30';ctx.shadowColor='#ff3b30';ctx.shadowBlur=12;
-    ctx.beginPath();ctx.arc(food.x*gs+gs/2,food.y*gs+gs/2,gs/2-2,0,Math.PI*2);ctx.fill();ctx.shadowBlur=0;
-    snake.forEach((s,i)=>{
-      const t=1-i/(snake.length+6);
-      ctx.fillStyle=i===0?'#30d158':`rgba(48,209,88,${0.2+t*0.8})`;
-      ctx.fillRect(s.x*gs+(i===0?1:2),s.y*gs+(i===0?1:2),gs-(i===0?2:4),gs-(i===0?2:4));
-    });
-    const h=snake[0],cx=h.x*gs+gs/2,cy=h.y*gs+gs/2,ex=dir.x*6,ey=dir.y*6;
-    ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(cx+ex-4,cy+ey-4,3,0,Math.PI*2);ctx.fill();ctx.beginPath();ctx.arc(cx+ex+4,cy+ey+4,3,0,Math.PI*2);ctx.fill();
+  function clearLines(){
+    let cleared=0;
+    for(let r=ROWS-1;r>=0;r--){if(board[r].every(v=>v)){board.splice(r,1);board.unshift(Array(COLS).fill(0));cleared++;r++}}
+    if(cleared){lines+=cleared;score+=[0,100,300,500,800][cleared];updateStats();if(lines%10===0&&interval>150){clearInterval(interval);interval=setInterval(tick,Math.max(100,600-lines*5))}}
   }
 
-  function tick(){
-    if(paused||!running)return;
-    dir=ndir;
-    const h={x:snake[0].x+dir.x,y:snake[0].y+dir.y};
-    if(h.x<0||h.x>=tc||h.y<0||h.y>=tc||snake.some(s=>s.x===h.x&&s.y===h.y)){over();return}
-    snake.unshift(h);
-    if(h.x===food.x&&h.y===food.y){score+=10;updateScore();rfood()}else{snake.pop()}
+  function updateStats(){document.getElementById('tetris-score').textContent=score;document.getElementById('tetris-lines').textContent=lines}
+
+  function tick(){if(gameOver)return;if(valid(px,py+1,piece)){py++}else{place();clearLines();spawn()}draw()}
+
+  function draw(){
+    ctx.fillStyle='#1a1a2e';ctx.fillRect(0,0,300,600);
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){if(board[r][c]){ctx.fillStyle=COLORS[board[r][c]];ctx.fillRect(c*BS,r*BS,BS-1,BS-1)}}
+    if(!gameOver&&piece){const id=piece.flat().find(v=>v);ctx.fillStyle=COLORS[id]||'#fff';for(let r=0;r<piece.length;r++)for(let c=0;c<piece[r].length;c++)if(piece[r][c])ctx.fillRect((px+c)*BS,(py+r)*BS,BS-1,BS-1)}
+    if(gameOver){ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,0,300,600);ctx.fillStyle='#fff';ctx.font='22px sans-serif';ctx.textAlign='center';ctx.fillText('游戏结束',150,290);ctx.font='14px sans-serif';ctx.fillText('得分:'+score,150,320);ctx.textAlign='start'}
+  }
+
+  function start(){board=Array.from({length:ROWS},()=>Array(COLS).fill(0));score=0;lines=0;gameOver=false;updateStats();clearInterval(interval);interval=setInterval(tick,500);spawn();draw()}
+  document.getElementById('tetris-start').addEventListener('click',start);
+
+  document.addEventListener('keydown',function tk(e){
+    if(document.activeElement!==document.body&&document.activeElement?.id!=='tetris-cv')return;
+    if(gameOver)return;
+    const k=e.key;e.preventDefault();
+    if(k==='ArrowLeft'&&valid(px-1,py,piece))px--;
+    if(k==='ArrowRight'&&valid(px+1,py,piece))px++;
+    if(k==='ArrowDown'&&valid(px,py+1,piece))py++;
+    if(k==='ArrowUp')rotate();
+    if(k===' '){while(valid(px,py+1,piece))py++;tick()}
+    draw();
+  });
+
+  start();
+  gameCleanups.tetris=()=>{clearInterval(interval)};
+}
+
+// ====== MINESWEEPER ======
+function renderMinesweeper(ct){
+  ct.innerHTML=`
+    <div style="text-align:center;margin-bottom:12px">
+      <select id="mine-diff" style="padding:6px 14px;border-radius:14px;border:1.5px solid var(--border);font-family:inherit;font-size:.85rem;cursor:pointer">
+        <option value="9">简单 9×9 (10雷)</option>
+        <option value="14" selected>中等 14×14 (40雷)</option>
+        <option value="20">困难 20×20 (80雷)</option>
+      </select>
+      <button class="btn btn-sm" id="mine-restart" style="background:var(--accent);color:#fff;border:none;margin-left:8px">新游戏</button>
+    </div>
+    <canvas class="gcanvas" id="mine-cv" width="420" height="420"></canvas>
+    <div class="ginfo"><span>🚩 剩余：<strong id="mine-flags">40</strong></span><span>⏱ <strong id="mine-time">0</strong>s</span></div>
+  `;
+  initMinesweeper();
+}
+function initMinesweeper(){
+  const cv=document.getElementById('mine-cv'),ctx=cv.getContext('2d');
+  let size=14,mines=40,grid=[],revealed=[],flagged=[],gameOver=false,started=false,timer=0,tInterval=null;
+  const CS=Math.floor(420/size);
+
+  function init(){
+    size=parseInt(document.getElementById('mine-diff').value);
+    mines=size===9?10:size===14?40:80;
+    const s=Math.floor(420/size);cv.width=cv.height=s*size;
+    grid=Array.from({length:size},()=>Array(size).fill(0));
+    revealed=Array.from({length:size},()=>Array(size).fill(false));
+    flagged=Array.from({length:size},()=>Array(size).fill(false));
+    gameOver=false;started=false;timer=0;
+    clearInterval(tInterval);tInterval=null;
+    document.getElementById('mine-flags').textContent=mines;
+    document.getElementById('mine-time').textContent='0';
+
+    // place mines
+    let placed=0;
+    while(placed<mines){
+      const r=Math.floor(Math.random()*size),c=Math.floor(Math.random()*size);
+      if(grid[r][c]===-1)continue;
+      grid[r][c]=-1;placed++;
+    }
+    // numbers
+    for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+      if(grid[r][c]===-1)continue;
+      let count=0;
+      for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++){const nr=r+dr,nc=c+dc;if(nr>=0&&nr<size&&nc>=0&&nc<size&&grid[nr][nc]===-1)count++}
+      grid[r][c]=count;
+    }
     draw();
   }
 
-  function updateScore(){
-    document.getElementById('snake-score').textContent=score;
-    const fs=document.getElementById('snake-score-fs');if(fs)fs.textContent=score;
+  function draw(){
+    const s=cv.width/size;
+    ctx.fillStyle='#bbb';ctx.fillRect(0,0,cv.width,cv.height);
+    for(let r=0;r<size;r++)for(let c=0;c<size;c++){
+      const x=c*s,y=r*s;
+      if(revealed[r][c]){
+        ctx.fillStyle='#e8e8e8';ctx.fillRect(x,y,s-1,s-1);
+        if(grid[r][c]===-1){ctx.fillStyle='#ff3b30';ctx.font=`bold ${s*0.6}px sans-serif`;ctx.textAlign='center';ctx.fillText('💣',x+s/2,y+s*0.75)}
+        else if(grid[r][c]>0){ctx.fillStyle=['','#0071e3','#30d158','#ff3b30','#5e5ce6','#8b0000','#008b8b','#000','#888'][grid[r][c]];ctx.font=`bold ${s*0.55}px sans-serif`;ctx.textAlign='center';ctx.fillText(grid[r][c],x+s/2,y+s*0.75)}
+      }else{
+        ctx.fillStyle='#c0c0c0';ctx.fillRect(x,y,s-1,s-1);
+        ctx.fillStyle='#ddd';ctx.fillRect(x+2,y+2,s-5,s-5);
+        if(flagged[r][c]){ctx.font=`${s*0.55}px sans-serif`;ctx.textAlign='center';ctx.fillText('🚩',x+s/2,y+s*0.75)}
+      }
+    }
+    ctx.textAlign='start';
+    if(gameOver){
+      ctx.fillStyle='rgba(0,0,0,0.5)';ctx.fillRect(0,0,cv.width,cv.height);
+      ctx.fillStyle='#fff';ctx.font='bold 24px sans-serif';ctx.textAlign='center';
+      ctx.fillText('游戏结束',cv.width/2,cv.height/2);ctx.textAlign='start';
+    }
   }
 
-  function over(){
-    running=false;clearInterval(loop);
-    if(score>best){best=score;localStorage.setItem('snakeBest',best);document.getElementById('snake-best').textContent=best;const fb=document.getElementById('snake-best-fs');if(fb)fb.textContent=best}
-    ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(0,0,W,H);
-    ctx.fillStyle='#fff';ctx.font='bold 24px -apple-system,sans-serif';ctx.textAlign='center';
-    ctx.fillText('游戏结束',W/2,H/2-12);ctx.font='15px -apple-system,sans-serif';ctx.fillStyle='#aaa';
-    ctx.fillText('得分: '+score+' | 点击重新开始',W/2,H/2+20);ctx.textAlign='start';
+  function reveal(r,c){
+    if(r<0||r>=size||c<0||c>=size||revealed[r][c]||flagged[r][c])return;
+    if(!started){started=true;tInterval=setInterval(()=>{timer++;document.getElementById('mine-time').textContent=timer},1000)}
+    revealed[r][c]=true;
+    if(grid[r][c]===-1){gameOver=true;revealAll();return}
+    if(grid[r][c]===0){for(let dr=-1;dr<=1;dr++)for(let dc=-1;dc<=1;dc++)reveal(r+dr,c+dc)}
+    checkWin();
   }
 
-  function restart(){
-    clearInterval(loop);
-    snake=[{x:8,y:9},{x:7,y:9},{x:6,y:9}];dir={x:1,y:0};ndir={x:1,y:0};score=0;
-    updateScore();running=true;paused=false;rfood();draw();
-    loop=setInterval(tick,speed);
+  function revealAll(){for(let r=0;r<size;r++)for(let c=0;c<size;c++)revealed[r][c]=true;clearInterval(tInterval)}
+
+  function checkWin(){
+    for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(grid[r][c]!==-1&&!revealed[r][c])return;
+    clearInterval(tInterval);gameOver=true;
   }
 
-  function setSpeed(s){speed=s;if(running){clearInterval(loop);loop=setInterval(tick,speed)}}
+  cv.addEventListener('click',e=>{
+    if(gameOver)return;
+    const rect=cv.getBoundingClientRect(),s=cv.width/size;
+    const c=Math.floor((e.clientX-rect.left)/s),r=Math.floor((e.clientY-rect.top)/s);
+    reveal(r,c);draw();
+  });
+  cv.addEventListener('contextmenu',e=>{
+    e.preventDefault();if(gameOver)return;
+    const rect=cv.getBoundingClientRect(),s=cv.width/size;
+    const c=Math.floor((e.clientX-rect.left)/s),r=Math.floor((e.clientY-rect.top)/s);
+    if(!revealed[r][c]){flagged[r][c]=!flagged[r][c];document.getElementById('mine-flags').textContent=mines-countFlags()}
+    draw();
+  });
 
-  c.addEventListener('click',()=>{if(!running)restart()});
+  function countFlags(){let f=0;for(let r=0;r<size;r++)for(let c=0;c<size;c++)if(flagged[r][c])f++;return f}
+
+  document.getElementById('mine-diff').addEventListener('change',init);
+  document.getElementById('mine-restart').addEventListener('click',init);
+  init();
+  gameCleanups.mine=()=>{clearInterval(tInterval)};
+}
+
+// ====== SUDOKU ======
+function renderSudoku(ct){
+  ct.innerHTML=`
+    <div style="text-align:center;margin-bottom:12px">
+      <select id="sudo-diff" style="padding:6px 14px;border-radius:14px;border:1.5px solid var(--border);font-family:inherit;font-size:.85rem;cursor:pointer">
+        <option value="easy">简单</option><option value="medium" selected>中等</option><option value="hard">困难</option>
+      </select>
+      <button class="btn btn-sm" id="sudo-new" style="background:var(--accent);color:#fff;border:none;margin-left:8px">新题目</button>
+      <button class="btn btn-sm" id="sudo-check" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent;margin-left:8px">检查答案</button>
+    </div>
+    <div class="sudoku-grid" id="sudo-grid"></div>
+    <p style="text-align:center;margin-top:10px;color:var(--text2);font-size:.85rem">点击格子后用键盘 1-9 输入 · 退格键清除</p>
+  `;
+  initSudoku();
+}
+function initSudoku(){
+  const puzzles={
+    easy:[
+      [5,3,0,0,7,0,0,0,0],[6,0,0,1,9,5,0,0,0],[0,9,8,0,0,0,0,6,0],
+      [8,0,0,0,6,0,0,0,3],[4,0,0,8,0,3,0,0,1],[7,0,0,0,2,0,0,0,6],
+      [0,6,0,0,0,0,2,8,0],[0,0,0,4,1,9,0,0,5],[0,0,0,0,8,0,0,7,9]
+    ],
+    medium:[
+      [0,0,0,2,6,0,7,0,1],[6,8,0,0,7,0,0,9,0],[1,9,0,0,0,4,5,0,0],
+      [8,2,0,1,0,0,0,4,0],[0,0,4,6,0,2,9,0,0],[0,5,0,0,0,3,0,2,8],
+      [0,0,9,3,0,0,0,7,4],[0,4,0,0,5,0,0,3,6],[7,0,3,0,1,8,0,0,0]
+    ],
+    hard:[
+      [0,0,0,6,0,0,4,0,0],[7,0,0,0,0,3,6,0,0],[0,0,0,0,9,1,0,8,0],
+      [0,0,0,0,0,0,0,0,0],[0,5,0,1,8,0,0,0,3],[0,0,0,3,0,6,0,4,5],
+      [0,4,0,2,0,0,0,6,0],[9,0,3,0,0,0,0,0,0],[0,2,0,0,0,0,1,0,0]
+    ]
+  };
+
+  function gen(){
+    const diff=document.getElementById('sudo-diff').value;
+    const grid=JSON.parse(JSON.stringify(puzzles[diff]));
+    const givens=[];
+    for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(grid[r][c]!==0)givens.push({r,c});
+    return{grid,givens};
+  }
+
+  let state=gen();
+  const gridEl=document.getElementById('sudo-grid');
+
+  function render(){
+    gridEl.innerHTML='';
+    for(let r=0;r<9;r++)for(let c=0;c<9;c++){
+      const inp=document.createElement('input');
+      inp.type='text';inp.maxLength=1;
+      if(state.grid[r][c]!==0&&state.givens.some(g=>g.r===r&&g.c===c)){
+        inp.value=state.grid[r][c];inp.className='given';inp.readOnly=true;
+      }else if(state.grid[r][c]!==0){
+        inp.value=state.grid[r][c];
+      }
+      inp.dataset.r=r;inp.dataset.c=c;
+      inp.addEventListener('click',handleClick);
+      inp.addEventListener('keydown',handleKey);
+      gridEl.appendChild(inp);
+    }
+  }
+
+  let active=null;
+  function handleClick(e){
+    if(active){active.style.background='';active.style.outline=''}
+    if(e.target.readOnly)return;
+    e.target.style.background='#e8f0fe';e.target.style.outline='2px solid var(--accent)';
+    active=e.target;
+  }
 
   function handleKey(e){
-    const pc=document.getElementById('snake-wrapper');
-    const isFS=!!document.fullscreenElement&&document.fullscreenElement===pc;
-    if(!isFS&&document.activeElement!==document.body&&document.activeElement!==c)return;
-    if(!running)return;
-    if(e.key===' '){paused=!paused;e.preventDefault();return}
-    if(paused)return;
-    const k=e.key.toLowerCase();
-    if((k==='arrowup'||k==='w')&&dir.y===0)ndir={x:0,y:-1};
-    if((k==='arrowdown'||k==='s')&&dir.y===0)ndir={x:0,y:1};
-    if((k==='arrowleft'||k==='a')&&dir.x===0)ndir={x:-1,y:0};
-    if((k==='arrowright'||k==='d')&&dir.x===0)ndir={x:1,y:0};
+    if(e.key==='Backspace'||e.key==='Delete'){e.target.value='';e.preventDefault()}
+    if(e.key>='1'&&e.key<='9'){e.target.value=e.key;e.preventDefault()}
+    const r=parseInt(e.target.dataset.r),c=parseInt(e.target.dataset.c);
+    state.grid[r][c]=e.target.value?parseInt(e.target.value):0;
+    if(e.key==='ArrowUp'||e.key==='ArrowDown'||e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();const nr=r+(e.key==='ArrowUp'?-1:e.key==='ArrowDown'?1:0),nc=c+(e.key==='ArrowLeft'?-1:e.key==='ArrowRight'?1:0);if(nr>=0&&nr<9&&nc>=0&&nc<9){const ni=gridEl.children[nr*9+nc];if(ni)ni.click()}}
   }
-  document.addEventListener('keydown',handleKey);
 
-  let tx,ty;
-  c.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;e.preventDefault()});
-  c.addEventListener('touchmove',e=>e.preventDefault());
-  c.addEventListener('touchend',e=>{
-    if(!running||!tx)return;
-    const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
-    if(Math.abs(dx)>Math.abs(dy)){if(dx>0&&dir.x===0)ndir={x:1,y:0};else if(dx<0&&dir.x===0)ndir={x:-1,y:0}}
-    else{if(dy>0&&dir.y===0)ndir={x:0,y:1};else if(dy<0&&dir.y===0)ndir={x:0,y:-1}}
+  document.getElementById('sudo-new').addEventListener('click',()=>{state=gen();render()});
+  document.getElementById('sudo-check').addEventListener('click',()=>{
+    // quick check: no duplicates in rows/cols/boxes
+    let ok=true;
+    for(let i=0;i<9;i++){
+      const row=new Set(),col=new Set();
+      for(let j=0;j<9;j++){
+        if(state.grid[i][j]&&row.has(state.grid[i][j]))ok=false;else row.add(state.grid[i][j]);
+        if(state.grid[j][i]&&col.has(state.grid[j][i]))ok=false;else col.add(state.grid[j][i]);
+      }
+      const box=new Set(),br=Math.floor(i/3)*3,bc=(i%3)*3;
+      for(let r=br;r<br+3;r++)for(let c=bc;c<bc+3;c++)if(state.grid[r][c]&&box.has(state.grid[r][c]))ok=false;else box.add(state.grid[r][c]);
+    }
+    // check all filled
+    for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(state.grid[r][c]===0)ok=false;
+    alert(ok?'🎉 恭喜！答案正确！':'❌ 还有错误或空格，再检查下～');
   });
 
-  document.getElementById('snake-diff').addEventListener('change',function(){setSpeed(speeds[this.value])});
-  const dfs=document.getElementById('snake-diff-fs');if(dfs)dfs.addEventListener('change',function(){setSpeed(speeds[this.value])});
-
-  draw();loop=setInterval(tick,speed);
-
-  panelMap.snake={cleanup(){clearInterval(loop);document.removeEventListener('keydown',handleKey)}};
-}
-
-// ====== MAHJONG ======
-function renderMahjong(ct){
-  ct.innerHTML=`
-    <div class="toolbar fs-hide">
-      <select id="mj-diff"><option value="6">🐢 简单(6×6)</option><option value="8" selected>🐍 普通(8×8)</option><option value="10">⚡ 困难(10×10)</option></select>
-      <button class="btn-full" id="mj-fs-btn">⛶ 全屏</button>
-    </div>
-    <div class="game-wrapper" id="mj-wrapper">
-      <button class="fs-exit" id="mj-fs-exit">✕ 退出全屏</button>
-      <div id="mj-grid-wrap" style="display:flex;justify-content:center"></div>
-    </div>
-    <div class="mj-info fs-hide"><span>剩余：<strong id="mj-left">0</strong></span><span>用时：<strong id="mj-time">0</strong>s</span></div>
-  `;
-  initMahjong();
-  setupFullscreen('#mj-fs-btn','#mj-wrapper');
-}
-
-// Fixed emoji array using spread operator for proper surrogate pair handling
-const EMOJIS=[...'🍎🍊🍋🍇🍓🍒🥝🍌🍑🥭🍍🥥🍈🍐🥑🌽🥕🍔🍕🍩🍪🎂🍿🍭🍫🍦🧁🍰🥜🍯☕🍵🧃🥤🏀⚽🎾🏈🎱🚀🌈⭐🔥💎🎵🎸🦊🐶🐱🐼🐨🐸🦄🐙🦀🐳🦋🌻🌹🍀🌺🌸💐🍄🐣🐤🐥🦉🐧🐝🐞🌙☀️⚡❄️'];
-
-let mjState=null;
-
-function initMahjong(){
-  const size=parseInt(document.getElementById('mj-diff')?.value||'8');
-  const total=size*size;
-  if(total%2!==0)return;
-  const pairs=total/2;
-  const tiles=[];
-  for(let i=0;i<pairs;i++)tiles.push(EMOJIS[i%EMOJIS.length],EMOJIS[i%EMOJIS.length]);
-  for(let i=tiles.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[tiles[i],tiles[j]]=[tiles[j],tiles[i]]}
-  const grid=[];let idx=0;
-  for(let r=0;r<size;r++){grid[r]=[];for(let c=0;c<size;c++)grid[r][c]=tiles[idx++]}
-  mjState={grid,size,selected:null,left:total,startTime:Date.now(),timer:null};
-  document.getElementById('mj-left').textContent=total;document.getElementById('mj-time').textContent='0';
-  if(mjState.timer)clearInterval(mjState.timer);
-  mjState.timer=setInterval(()=>{if(mjState.left===0){clearInterval(mjState.timer);return}document.getElementById('mj-time').textContent=Math.floor((Date.now()-mjState.startTime)/1000)},500);
-  renderMjGrid();
-}
-
-function renderMjGrid(){
-  if(!mjState)return;
-  const wrap=document.getElementById('mj-grid-wrap'),{grid,size}=mjState;
-  const ts=size>8?44:52;
-  wrap.innerHTML=`<div class="mj-grid" style="grid-template-columns:repeat(${size},${ts}px)">${
-    grid.map((row,r)=>row.map((tile,c)=>{
-      if(!tile)return '<div class="mj-tile empty"></div>';
-      const sel=mjState.selected&&mjState.selected.r===r&&mjState.selected.c===c?' selected':'';
-      return `<div class="mj-tile${sel}" data-r="${r}" data-c="${c}">${tile}</div>`;
-    }).join('')).join('')
-  }</div>`;
-  wrap.querySelectorAll('.mj-tile:not(.empty)').forEach(t=>t.addEventListener('click',()=>onMjClick(parseInt(t.dataset.r),parseInt(t.dataset.c))));
-}
-
-function onMjClick(r,c){
-  if(!mjState||mjState.left===0)return;
-  const{grid,selected}=mjState;
-  if(!selected){mjState.selected={r,c};renderMjGrid();return}
-  const sr=selected.r,sc=selected.c;
-  if(sr===r&&sc===c){mjState.selected=null;renderMjGrid();return}
-  if(grid[sr][sc]===grid[r][c]&&canConnect(grid,sr,sc,r,c)){
-    grid[sr][sc]=null;grid[r][c]=null;mjState.left-=2;
-    document.getElementById('mj-left').textContent=mjState.left;
-    if(mjState.left===0){clearInterval(mjState.timer);const t=Math.floor((Date.now()-mjState.startTime)/1000);document.getElementById('mj-time').textContent=t;setTimeout(()=>alert(`🎉 通关！用时 ${t}s`),300)}
-  }
-  mjState.selected=null;renderMjGrid();
-}
-
-function canConnect(grid,r1,c1,r2,c2){
-  const R=grid.length,C=grid[0].length;
-  function clearH(r,a,b){for(let c=Math.min(a,b);c<=Math.max(a,b);c++)if(grid[r][c]!==null&&!(r===r1&&c===c1)&&!(r===r2&&c===c2))return false;return true}
-  function clearV(c,a,b){for(let r=Math.min(a,b);r<=Math.max(a,b);r++)if(grid[r][c]!==null&&!(r===r1&&c===c1)&&!(r===r2&&c===c2))return false;return true}
-  if(r1===r2&&clearH(r1,c1,c2))return true;
-  if(c1===c2&&clearV(c1,r1,r2))return true;
-  if(grid[r1][c2]===null&&clearH(r1,c1,c2)&&clearV(c2,r1,r2))return true;
-  if(grid[r2][c1]===null&&clearV(c1,r1,r2)&&clearH(r2,c1,c2))return true;
-  for(let r=0;r<R;r++)if(grid[r][c1]===null&&grid[r][c2]===null&&clearV(c1,Math.min(r1,r),Math.max(r1,r))&&clearH(r,c1,c2)&&clearV(c2,Math.min(r,r2),Math.max(r,r2)))return true;
-  for(let c=0;c<C;c++)if(grid[r1][c]===null&&grid[r2][c]===null&&clearH(r1,Math.min(c1,c),Math.max(c1,c))&&clearV(c,r1,r2)&&clearH(r2,Math.min(c,c2),Math.max(c,c2)))return true;
-  return false;
-}
-
-document.addEventListener('change',e=>{if(e.target.id==='mj-diff'){if(mjState&&mjState.timer)clearInterval(mjState.timer);initMahjong()}});
-
-// ====== GOLD MINER ======
-function renderGold(ct){
-  ct.innerHTML=`
-    <div class="toolbar fs-hide">
-      <select id="gold-diff"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select>
-      <button class="btn-full" id="gold-fs-btn">⛶ 全屏</button>
-    </div>
-    <div class="game-wrapper gold-wrap" id="gold-wrapper">
-      <button class="fs-exit" id="gold-fs-exit">✕ 退出全屏</button>
-      <div class="fs-show fs-info"><span>💰 <strong id="gold-score-fs">0</strong></span><span>📦 关卡 <strong id="gold-level-fs">1</strong></span><span>🎯 目标 <strong id="gold-target-fs">500</strong></span></div>
-      <canvas id="gold-game" width="600" height="440"></canvas>
-    </div>
-    <div class="gold-info fs-hide"><span>💰 金币：<strong id="gold-score">0</strong></span><span>📦 关卡：<strong id="gold-level">1</strong>/100</span><span>🎯 目标：<strong id="gold-target">500</strong></span></div>
-  `;
-  initGold();
-  setupFullscreen('#gold-fs-btn','#gold-wrapper');
-}
-
-function initGold(){
-  const c=document.getElementById('gold-game'),ctx=c.getContext('2d');
-  const W=600,H=440;
-  let level=1,totalGold=0,targetGold=500,swingAngle=0,swingSpeed=0.025,hookX=W/2,hookY=60,hookLen=30,hookState='swing',hookV=0,items=[],animId=null,difficulty='medium';
-  const speeds={easy:0.018,medium:0.025,hard:0.035};
-  const goldColors=['#ffd700','#ffb800','#ff9500'];
-
-  function genItems(){
-    items=[];
-    const count=8+level;
-    for(let i=0;i<count;i++){
-      const x=40+Math.random()*(W-80),y=120+Math.random()*(H-160);
-      const r=Math.random();
-      if(r<0.6){// gold: size varies
-        const size=14+Math.random()*26,value=Math.floor(size*3);
-        items.push({x,y,w:size,h:size,type:'gold',value,color:goldColors[Math.floor(Math.random()*3)]});
-      }else if(r<0.85){// rock
-        const size=18+Math.random()*20;
-        items.push({x,y,w:size,h:size,type:'rock',value:0,color:'#888'});
-      }else{// diamond
-        items.push({x,y,w:14,h:22,type:'diamond',value:200+level*10,color:'#00e5ff'});
-      }
-    }
-  }
-
-  function updateTarget(){targetGold=500+level*150;document.getElementById('gold-target').textContent=targetGold;const ft=document.getElementById('gold-target-fs');if(ft)ft.textContent=targetGold}
-  function updateScoreUI(){document.getElementById('gold-score').textContent=totalGold;const fs=document.getElementById('gold-score-fs');if(fs)fs.textContent=totalGold}
-  function updateLevelUI(){document.getElementById('gold-level').textContent=level;const fl=document.getElementById('gold-level-fs');if(fl)fl.textContent=level}
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    // ground
-    const grd=ctx.createLinearGradient(0,0,0,H);
-    grd.addColorStop(0,'#3d2817');grd.addColorStop(0.25,'#5a3a1e');grd.addColorStop(1,'#3a2010');
-    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
-    // ground surface
-    ctx.fillStyle='#7a5a3a';ctx.fillRect(0,H-40,W,40);
-    ctx.fillStyle='#8b6b4a';ctx.fillRect(0,H-38,W,6);
-
-    // Items
-    items.forEach(it=>{
-      if(it.caught)return;
-      ctx.save();ctx.translate(it.x,it.y);
-      if(it.type==='gold'){
-        ctx.fillStyle=it.color;ctx.shadowColor=it.color;ctx.shadowBlur=8;
-        ctx.beginPath();ctx.roundRect(-it.w/2,-it.h/2,it.w,it.h,6);ctx.fill();
-        ctx.fillStyle='rgba(255,255,255,0.3)';ctx.beginPath();ctx.roundRect(-it.w/2+4,-it.h/2+3,it.w/2,it.h/3,3);ctx.fill();
-        ctx.shadowBlur=0;ctx.fillStyle='#3a2010';ctx.font='bold 11px sans-serif';ctx.textAlign='center';ctx.fillText('$'+it.value,0,4);
-      }else if(it.type==='rock'){
-        ctx.fillStyle='#666';ctx.shadowColor='#444';ctx.shadowBlur=4;
-        ctx.beginPath();ctx.roundRect(-it.w/2,-it.h/2,it.w,it.h,5);ctx.fill();ctx.shadowBlur=0;
-        ctx.fillStyle='#888';ctx.beginPath();ctx.roundRect(-it.w/2+3,-it.h/2+2,it.w/3,it.h/3,3);ctx.fill();
-      }else{
-        ctx.fillStyle='#00e5ff';ctx.shadowColor='#00e5ff';ctx.shadowBlur=12;
-        ctx.beginPath();ctx.moveTo(0,-it.h/2);ctx.lineTo(it.w/2,0);ctx.lineTo(0,it.h/2);ctx.lineTo(-it.w/2,0);ctx.closePath();ctx.fill();ctx.shadowBlur=0;
-        ctx.fillStyle='#fff';ctx.font='bold 10px sans-serif';ctx.textAlign='center';ctx.fillText('💎'+it.value,-2,2);
-      }
-      ctx.restore();
-    });
-
-    // Cable
-    const sx=W/2, sy=60;
-    ctx.strokeStyle='#aaa';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(sx,sy);ctx.lineTo(hookX,hookY+hookLen);ctx.stroke();
-
-    // Hook
-    ctx.save();ctx.translate(hookX,hookY+hookLen);
-    ctx.fillStyle='#ccc';ctx.strokeStyle='#999';ctx.lineWidth=2;
-    // claw
-    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(-12,16);ctx.lineTo(-6,16);ctx.lineTo(0,8);ctx.lineTo(6,16);ctx.lineTo(12,16);ctx.closePath();ctx.fill();ctx.stroke();
-    ctx.restore();
-
-    // Caught item follows hook
-    const caught=items.find(it=>it.caught);
-    if(caught){ctx.fillStyle=caught.color;ctx.font='bold 16px sans-serif';ctx.textAlign='center';ctx.fillText(caught.type==='diamond'?'💎':caught.type==='rock'?'🪨':'🟡',hookX,hookY+hookLen+28)}
-
-    // Ground decorations
-    ctx.fillStyle='rgba(0,0,0,0.1)';
-    for(let i=0;i<8;i++){ctx.beginPath();ctx.arc(40+i*75,H-40,6+Math.random()*8,0,Math.PI*2);ctx.fill()}
-  }
-
-  function loop(){
-    if(hookState==='swing'){
-      swingAngle+=swingSpeed;
-      hookX=W/2+Math.sin(swingAngle)*220;
-      hookLen=30;
-    }else if(hookState==='dropping'){
-      hookLen+=hookV;hookV+=0.4;
-      // collision
-      const hx=hookX,hy=hookY+hookLen;
-      for(const it of items){
-        if(it.caught)continue;
-        const dx=hx-it.x,dy=hy-it.y,dist=Math.sqrt(dx*dx+dy*dy);
-        if(dist<(it.w+it.h)/3+8){hookState='retract';if(it.type==='rock')hookV=-2;else if(it.type==='diamond')hookV=-2.5;else hookV=-3-Math.max(0,it.value/30);it.caught=true;break}
-      }
-      if(hookY+hookLen>H-30){hookState='retract';hookV=-2}
-    }else if(hookState==='retract'){
-      hookLen+=hookV;hookV+=0.08;
-      if(hookY+hookLen<=60){
-        hookState='swing';hookLen=30;hookV=0;
-        // Score caught item
-        const caught=items.find(it=>it.caught);
-        if(caught){totalGold+=caught.value;updateScoreUI();caught.caught=null}
-      }
-    }
-    draw();
-    // Check level complete
-    if(hookState==='swing'&&totalGold>=targetGold){
-      if(level>=100){alert('🏆 恭喜！你已通关全部 100 关！总金币：'+totalGold);return}
-      level++;updateLevelUI();updateTarget();genItems();
-    }
-    animId=requestAnimationFrame(loop);
-  }
-
-  c.addEventListener('click',()=>{if(hookState==='swing'){hookState='dropping';hookV=3}});
-  // keyboard support
-  document.addEventListener('keydown',function goldKey(e){if(e.key===' '||e.key==='ArrowDown'){e.preventDefault();if(hookState==='swing'){hookState='dropping';hookV=3}}});
-  document.getElementById('gold-diff').addEventListener('change',function(){difficulty=this.value;swingSpeed=speeds[difficulty]});
-
-  genItems();updateTarget();updateLevelUI();updateScoreUI();draw();animId=requestAnimationFrame(loop);
-
-  panelMap.gold={cleanup(){if(animId)cancelAnimationFrame(animId)}}
-}
-
-// ====== FISH ======
-function renderFish(ct){
-  ct.innerHTML=`
-    <div class="toolbar fs-hide">
-      <select id="fish-diff"><option value="easy">🐢 简单</option><option value="medium" selected>🐍 普通</option><option value="hard">⚡ 困难</option></select>
-      <button class="btn-full" id="fish-fs-btn">⛶ 全屏</button>
-    </div>
-    <div class="game-wrapper fish-wrap" id="fish-wrapper">
-      <button class="fs-exit" id="fish-fs-exit">✕ 退出全屏</button>
-      <div class="fs-show fs-info"><span>🐟 <strong id="fish-score-fs">0</strong></span><span>🏆 <strong id="fish-best-fs">0</strong></span></div>
-      <canvas id="fish-game" width="600" height="420"></canvas>
-    </div>
-    <div class="fish-info fs-hide"><span>得分：<strong id="fish-score">0</strong></span><span>🏆 最高分：<strong id="fish-best">0</strong></span></div>
-  `;
-  initFish();
-  setupFullscreen('#fish-fs-btn','#fish-wrapper');
-}
-
-function initFish(){
-  const c=document.getElementById('fish-game'),ctx=c.getContext('2d');
-  const W=600,H=420;
-  const diffSettings={easy:{maxFish:6,speedMul:0.6,spawnRate:0.008},medium:{maxFish:10,speedMul:1,spawnRate:0.012},hard:{maxFish:15,speedMul:1.5,spawnRate:0.02}};
-  let settings=diffSettings.medium,score=0,best=parseInt(localStorage.getItem('fishBest')||'0'),animId;
-  document.getElementById('fish-best').textContent=best;const fbfs=document.getElementById('fish-best-fs');if(fbfs)fbfs.textContent=best;
-
-  const fishTypes=[
-    {emoji:'🐟',size:24,points:10},{emoji:'🐠',size:28,points:20},{emoji:'🐡',size:30,points:30},
-    {emoji:'🦈',size:40,points:50},{emoji:'🐙',size:26,points:15},{emoji:'🦀',size:22,points:25},
-    {emoji:'🐬',size:36,points:40},{emoji:'🐳',size:44,points:80}
-  ];
-  let fishes=[],particles=[],bubbles=[];
-  for(let i=0;i<15;i++)bubbles.push({x:Math.random()*W,y:Math.random()*H,r:2+Math.random()*4,speed:0.2+Math.random()*0.5,opacity:0.2+Math.random()*0.3});
-
-  function spawnFish(){
-    const ft=fishTypes[Math.floor(Math.random()*fishTypes.length)],fromLeft=Math.random()>0.5;
-    fishes.push({x:fromLeft?-50:W+50,y:40+Math.random()*(H-80),vx:(fromLeft?1:-1)*(0.5+Math.random()*2)*settings.speedMul,vy:(Math.random()-0.5)*1.5*settings.speedMul,type:ft,dir:fromLeft?1:-1,wobble:Math.random()*Math.PI*2,wobbleSpeed:0.01+Math.random()*0.03});
-  }
-
-  c.addEventListener('click',e=>{
-    const rect=c.getBoundingClientRect(),mx=(e.clientX-rect.left)*(W/rect.width),my=(e.clientY-rect.top)*(H/rect.height);
-    for(let i=fishes.length-1;i>=0;i--){
-      const f=fishes[i],dx=mx-f.x,dy=my-f.y,dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<f.type.size+8){score+=f.type.points;updateScoreF();for(let j=0;j<8;j++)particles.push({x:f.x,y:f.y,vx:(Math.random()-0.5)*4,vy:(Math.random()-0.5)*4,life:1});fishes.splice(i,1);break}
-    }
-  });
-
-  function updateScoreF(){
-    document.getElementById('fish-score').textContent=score;const fs=document.getElementById('fish-score-fs');if(fs)fs.textContent=score;
-    if(score>best){best=score;localStorage.setItem('fishBest',best);document.getElementById('fish-best').textContent=best;const fb=document.getElementById('fish-best-fs');if(fb)fb.textContent=best}
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    const grd=ctx.createLinearGradient(0,0,0,H);grd.addColorStop(0,'#0a1628');grd.addColorStop(0.4,'#0d2137');grd.addColorStop(1,'#0c1a2e');
-    ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
-    for(let i=0;i<3;i++){ctx.fillStyle=`rgba(100,180,255,${0.03+Math.sin(Date.now()/3000+i)*0.02})`;ctx.beginPath();ctx.moveTo(W*(0.2+i*0.3),0);ctx.lineTo(W*(0.1+i*0.3),H);ctx.lineTo(W*(0.3+i*0.3),H);ctx.fill()}
-    bubbles.forEach(b=>{b.y-=b.speed;if(b.y<-10){b.y=H+10;b.x=Math.random()*W}ctx.fillStyle=`rgba(255,255,255,${b.opacity})`;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill()});
-    fishes.forEach(f=>{
-      f.x+=f.vx;f.y+=f.vy+Math.sin(f.wobble)*0.3;f.wobble+=f.wobbleSpeed;
-      if(f.x<-60||f.x>W+60||f.y<-20||f.y>H+20){const idx=fishes.indexOf(f);if(idx>-1)fishes.splice(idx,1);return}
-      ctx.save();ctx.translate(f.x,f.y);ctx.scale(f.dir,1);ctx.font=`${f.type.size}px serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(f.type.emoji,0,0);ctx.restore();
-    });
-    particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life-=0.03;if(p.life<=0){const i=particles.indexOf(p);if(i>-1)particles.splice(i,1);return}ctx.fillStyle=`rgba(255,255,255,${p.life})`;ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);ctx.fill()});
-    if(fishes.length<settings.maxFish&&Math.random()<settings.spawnRate)spawnFish();
-    ctx.fillStyle='rgba(255,255,255,0.4)';ctx.font='13px -apple-system,sans-serif';ctx.fillText('🖱 点击捕鱼',14,22);
-    animId=requestAnimationFrame(draw);
-  }
-
-  for(let i=0;i<3;i++)spawnFish();draw();
-  document.getElementById('fish-diff').addEventListener('change',function(){settings=diffSettings[this.value]});
-  panelMap.fish={cleanup(){if(animId)cancelAnimationFrame(animId)}};
+  render();
 }
 
 // ====== CHART ======
@@ -619,7 +451,7 @@ function renderChartTool(ct){
   ct.innerHTML=`
     <div class="chart-controls">
       <select id="chart-type"><option value="scatter">散点图</option><option value="line" selected>折线图</option><option value="bar">柱状图</option><option value="pie">饼图</option></select>
-      <button class="btn-full" onclick="drawChart()">生成图表</button>
+      <button class="btn-primary" style="font-size:.85rem;padding:8px 18px" onclick="drawChart()">生成图表</button>
       <label class="btn-ghost btn-sm" style="cursor:pointer;border:1.5px solid var(--border);color:var(--text)">📁 上传 CSV<input type="file" accept=".csv,.tsv,.txt" onchange="uploadCSV(event)" hidden></label>
       <button class="btn-ghost btn-sm" style="color:var(--text)" onclick="loadSample()">试试示例</button>
     </div>
@@ -628,7 +460,6 @@ function renderChartTool(ct){
   `;
   loadSample();
 }
-
 function parseCSV(text){
   const lines=text.trim().split('\n').filter(l=>l.trim());if(lines.length<2)return null;
   const d=lines[0].includes('\t')?'\t':',',headers=lines[0].split(d).map(h=>h.trim()),rows=lines.slice(1).map(l=>l.split(d).map(v=>v.trim())),numCols=[];
@@ -636,7 +467,6 @@ function parseCSV(text){
   return{headers,rows,numCols};
 }
 function palette(n){const b=['#0071e3','#ff3b30','#30d158','#ff9f0a','#5e5ce6','#64d2ff','#ff375f','#ac8e68'];return Array.from({length:n},(_,i)=>b[i%b.length])}
-
 function drawChart(){
   const text=document.getElementById('data-input')?.value.trim();if(!text){alert('请先粘贴数据或上传文件');return}
   const p=parseCSV(text);if(!p){alert('数据格式不正确');return}
@@ -659,10 +489,10 @@ function loadSample(){
 // ====== BLOG ======
 const posts=[
   {id:1,date:'2026-06-10',emoji:'🏔️',title:'周末徒步：从城市到山野',excerpt:'沿着溪流走了 12 公里，海拔爬升 800 米。山顶的风吹散了所有疲惫。',content:'<p>周六早上六点出发，驱车两小时到达山脚。沿着溪流走了 12 公里，海拔爬升 800 米。</p><p>中午在山腰平台上吃了简单三明治，喝了一口热咖啡——这可能是今年最好喝的咖啡。</p><p>山顶的风很大，但吹散了所有疲惫。站在那里往下看，城市变成了小小的积木。</p>'},
-  {id:2,date:'2026-06-05',emoji:'📊',title:'用 R 分析城市空气质量数据',excerpt:'抓取了最近一年的 AQI 数据，用 ggplot2 画了几张图，发现了一些有趣的变化规律。',content:'<p>最近对城市空气质量数据产生了兴趣，写了一个小脚本从公开数据源抓取了最近一年的 AQI 数据。</p><p>用 ggplot2 做了可视化：按月聚合的 AQI 趋势、各站点对比热力图、周末 vs 工作日差异。</p><p>最有趣的发现：每年 3-4 月空气质量短暂好转，11-12 月明显恶化。周期比预想的规律。</p>'},
-  {id:3,date:'2026-05-28',emoji:'☕',title:'尝试了十种手冲方式',excerpt:'V60、Chemex、法压壶… 用同一款豆子对比了十种冲煮方法。',content:'<p>为了找到最适合埃塞俄比亚耶加雪菲的冲煮方式，我做了一个小小的对照实验。</p><p>同一款豆子、同样的研磨度、同样的水温，换了十种不同的器具。每种冲两杯，记录风味和评分。</p><p>结果意外：最便宜的 V60 拿了最高分，最贵的反而垫底。工具不一定要贵。</p>'},
-  {id:4,date:'2026-05-20',emoji:'🎮',title:'写了一个贪吃蛇小游戏',excerpt:'周末花半天时间用 Canvas 撸了一个贪吃蛇，加了触控支持，还挺好玩的。',content:'<p>一直想自己写小游戏，选了最经典的贪吃蛇，用 HTML5 Canvas 实现。</p><p>核心逻辑 200 行，边缘情况比预想多：撞墙、自碰、食物生成、暂停恢复、触控适配……</p><p>写完发现比玩别人的游戏更有成就感。这就是创造的快乐吧。</p>'},
-  {id:5,date:'2026-05-12',emoji:'🌿',title:'阳台上种的第一批香草长大了',excerpt:'薄荷、迷迭香和罗勒，两个月从种子到餐桌。',content:'<p>两个月前种下的香草种子终于可以采摘了。薄荷长得最快，霸占了半个花盆。</p><p>第一次用自己种的薄荷泡茶，感觉真的不一样。迷迭香烤了羊排，也很搭。</p>'}
+  {id:2,date:'2026-06-05',emoji:'📊',title:'用 R 分析城市空气质量数据',excerpt:'抓取了最近一年的 AQI 数据，用 ggplot2 画了几张图。',content:'<p>最近对城市空气质量数据产生了兴趣，写了一个小脚本从公开数据源抓取了最近一年的 AQI 数据。</p><p>用 ggplot2 做了可视化：按月聚合的 AQI 趋势、各站点对比热力图、周末 vs 工作日差异。</p><p>最有趣的发现：每年 3-4 月空气质量短暂好转，11-12 月明显恶化。</p>'},
+  {id:3,date:'2026-05-28',emoji:'☕',title:'尝试了十种手冲方式',excerpt:'V60、Chemex、法压壶… 同款豆子对比十种方法。',content:'<p>为了找到最适合埃塞俄比亚耶加雪菲的冲煮方式，做了一个小实验。</p><p>同一款豆子、同样的研磨度、同样的水温，换了十种不同的器具。</p><p>结果意外：最便宜的 V60 拿了最高分，最贵的反而垫底。</p>'},
+  {id:4,date:'2026-05-20',emoji:'🎮',title:'第一次写自己的小游戏',excerpt:'周末花半天时间用 Canvas 写游戏，比玩别人的更有成就感。',content:'<p>一直想自己写小游戏，选了经典款用 HTML5 Canvas 实现。</p><p>核心逻辑不算复杂，但边缘情况比预想多很多。写完发现比玩别人的游戏更有成就感。这就是创造的快乐吧。</p>'},
+  {id:5,date:'2026-05-12',emoji:'🌿',title:'阳台上的香草长大了',excerpt:'薄荷、迷迭香和罗勒，两个月从种子到餐桌。',content:'<p>两个月前种下的香草种子终于可以采摘了。薄荷长得最快，霸占了半个花盆。</p><p>第一次用自己种的薄荷泡茶，感觉真的不一样。迷迭香烤了羊排，也很搭。</p>'}
 ];
 function renderBlog(){
   const g=document.getElementById('blog-grid');
@@ -678,10 +508,10 @@ function openPost(id){
 renderBlog();
 
 // ====== INIT ======
-renderSnake(document.getElementById('games-content'));
+renderPanel(document.getElementById('games-content'),'p2048');
 renderChartTool(document.getElementById('tools-content'));
 
-// Scroll nav
+// scroll nav hide
 let lastScroll=0;
 window.addEventListener('scroll',()=>{
   const nav=document.querySelector('nav'),cs=window.scrollY;
