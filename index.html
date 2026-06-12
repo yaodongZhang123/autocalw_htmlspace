@@ -393,6 +393,7 @@ function updateSnake() {
 
 function gameOver() {
   running = false;
+  clearInterval(gameLoop);
   if (score > bestScore) {
     bestScore = score;
     localStorage.setItem('snakeBest', bestScore);
@@ -406,7 +407,7 @@ function gameOver() {
   ctx.textAlign = 'start';
 }
 
-canvas.addEventListener('click', () => { if (!running) { initSnake(); gameLoop = setInterval(updateSnake, 100); } });
+canvas.addEventListener('click', () => { if (!running) { clearInterval(gameLoop); initSnake(); gameLoop = setInterval(updateSnake, 100); } });
 document.addEventListener('keydown', e => {
   if (!running) return;
   const key = e.key.toLowerCase();
@@ -438,7 +439,7 @@ canvas.addEventListener('touchend', e => {
     else if (dy < 0 && direction.y === 0) nextDirection = {x:0,y:-1};
   }
 });
-initSnake(); drawSnake();
+initSnake(); drawSnake(); gameLoop = setInterval(updateSnake, 100);
 
 // ─── CHART ───
 let chartInstance = null;
