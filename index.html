@@ -67,7 +67,7 @@ section{padding:100px 24px;max-width:1100px;margin:0 auto}
 .msa-wrap .consensus{font-weight:700;border-top:1px solid var(--border);margin-top:4px;padding-top:4px}
 
 /* Volcano */
-.volc-wrap{position:relative;height:560px;max-width:520px;margin:0 auto}
+.volc-wrap{position:relative;height:460px}
 .volc-wrap canvas{width:100%!important}
 
 /* NGL */
@@ -75,7 +75,16 @@ section{padding:100px 24px;max-width:1100px;margin:0 auto}
 #ngl-viewport canvas{display:block}
 
 /* Phylo */
-#phylo-canvas{width:100%;height:400px;border-radius:var(--radius-sm);border:1px solid var(--border)}
+/* Tool + help panel */
+.tool-with-help{display:flex;gap:20px;align-items:flex-start}
+.tool-with-help .tool-main{flex:1;min-width:0}
+.tool-help{width:220px;flex-shrink:0;background:var(--card);border-radius:var(--radius-sm);padding:16px;font-size:.8rem;line-height:1.7;position:sticky;top:80px;align-self:flex-start;border:1px solid var(--border)}
+.tool-help h4{font-size:.85rem;font-weight:600;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.tool-help p{margin-bottom:6px;color:var(--text2)}
+.tool-help code{background:#f0f0f0;padding:1px 5px;border-radius:3px;font-size:.75rem;font-family:"SF Mono",Consolas,monospace}
+.tool-help .tag{display:inline-block;background:var(--accent);color:#fff;font-size:.7rem;padding:1px 6px;border-radius:8px;margin-right:3px}
+
+#phylo-cv{cursor:grab}#phylo-cv:active{cursor:grabbing}
 
 .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
 .blog-card{background:var(--card);border-radius:var(--radius);overflow:hidden;transition:transform var(--trans),box-shadow var(--trans);cursor:pointer;border:1px solid var(--border)}
@@ -199,7 +208,7 @@ function renderSudoku(ct){ct.innerHTML='<div class="toolbar"><select id="sudo-di
 function initSudoku(){const puzzles={easy:[[5,3,0,0,7,0,0,0,0],[6,0,0,1,9,5,0,0,0],[0,9,8,0,0,0,0,6,0],[8,0,0,0,6,0,0,0,3],[4,0,0,8,0,3,0,0,1],[7,0,0,0,2,0,0,0,6],[0,6,0,0,0,0,2,8,0],[0,0,0,4,1,9,0,0,5],[0,0,0,0,8,0,0,7,9]],medium:[[0,0,0,2,6,0,7,0,1],[6,8,0,0,7,0,0,9,0],[1,9,0,0,0,4,5,0,0],[8,2,0,1,0,0,0,4,0],[0,0,4,6,0,2,9,0,0],[0,5,0,0,0,3,0,2,8],[0,0,9,3,0,0,0,7,4],[0,4,0,0,5,0,0,3,6],[7,0,3,0,1,8,0,0,0]],hard:[[0,0,0,6,0,0,4,0,0],[7,0,0,0,0,3,6,0,0],[0,0,0,0,9,1,0,8,0],[0,0,0,0,0,0,0,0,0],[0,5,0,1,8,0,0,0,3],[0,0,0,3,0,6,0,4,5],[0,4,0,2,0,0,0,6,0],[9,0,3,0,0,0,0,0,0],[0,2,0,0,0,0,1,0,0]]};let state={grid:JSON.parse(JSON.stringify(puzzles.medium)),givens:[]};function gen(){const diff=document.getElementById('sudo-diff').value;state.grid=JSON.parse(JSON.stringify(puzzles[diff]));state.givens=[];for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(state.grid[r][c]!==0)state.givens.push({r,c});renderGrid()}const gridEl=document.getElementById('sudo-grid');function renderGrid(){gridEl.innerHTML='';for(let r=0;r<9;r++)for(let c=0;c<9;c++){const inp=document.createElement('input');inp.type='text';inp.maxLength=1;if(state.givens.some(g=>g.r===r&&g.c===c)){inp.value=state.grid[r][c];inp.className='given';inp.readOnly=true}else if(state.grid[r][c]!==0)inp.value=state.grid[r][c];inp.dataset.r=r;inp.dataset.c=c;inp.addEventListener('click',function(){document.querySelectorAll('#sudo-grid input').forEach(i=>{i.style.background='';i.style.outline=''});if(!this.readOnly){this.style.background='#e8f0fe';this.style.outline='2px solid var(--accent)'}});inp.addEventListener('keydown',function(e){if(e.key==='Backspace'||e.key==='Delete'){this.value='';e.preventDefault()}if(e.key>='1'&&e.key<='9'){this.value=e.key;e.preventDefault()}state.grid[parseInt(this.dataset.r)][parseInt(this.dataset.c)]=this.value?parseInt(this.value):0;if(e.key.startsWith('Arrow')){e.preventDefault();const nr=parseInt(this.dataset.r)+(e.key==='ArrowUp'?-1:e.key==='ArrowDown'?1:0),nc=parseInt(this.dataset.c)+(e.key==='ArrowLeft'?-1:e.key==='ArrowRight'?1:0);if(nr>=0&&nr<9&&nc>=0&&nc<9)gridEl.children[nr*9+nc].click()}});gridEl.appendChild(inp)}}document.getElementById('sudo-new').addEventListener('click',gen);document.getElementById('sudo-check').addEventListener('click',()=>{let ok=true;for(let i=0;i<9;i++){const row=new Set(),col=new Set();for(let j=0;j<9;j++){if(state.grid[i][j]&&row.has(state.grid[i][j]))ok=false;else row.add(state.grid[i][j]);if(state.grid[j][i]&&col.has(state.grid[j][i]))ok=false;else col.add(state.grid[j][i])}const box=new Set(),br=Math.floor(i/3)*3,bc=(i%3)*3;for(let r=br;r<br+3;r++)for(let c=bc;c<bc+3;c++)if(state.grid[r][c]&&box.has(state.grid[r][c]))ok=false;else box.add(state.grid[r][c])}for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(state.grid[r][c]===0)ok=false;alert(ok?'🎉 恭喜！答案正确！':'❌ 还有错误或空格～')});gen()}
 
 // ====== BIO SEQ ANALYZER ======
-function renderBio(ct){ct.innerHTML='<p style="color:var(--text2);margin-bottom:12px">粘贴 DNA/RNA/蛋白质序列，一键分析。支持 ATCG/ATCGU 和标准氨基酸代号。</p><div class="toolbar"><button class="btn-sm" onclick="bioGC()" style="background:var(--accent);color:#fff">GC含量</button><button class="btn-sm" onclick="bioLen()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">序列长度</button><button class="btn-sm" onclick="bioRevComp()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">反向互补</button><button class="btn-sm" onclick="bioTranscribe()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">DNA→RNA</button><button class="btn-sm" onclick="bioTranslate()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">翻译→蛋白</button><button class="btn-sm" onclick="bioAll()" style="background:#30d158;color:#fff">一键全分析</button></div><textarea class="data-input" id="bio-seq" placeholder="粘贴序列，例如：&#10;ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG&#10;（支持 DNA/RNA/蛋白质，大小写均可，自动去空白）" style="height:120px"></textarea><div class="seq-output" id="bio-result" style="display:none"></div>'}
+function renderBio(ct){ct.innerHTML='<div class="tool-with-help"><div class="tool-main"><p style="color:var(--text2);margin-bottom:12px">粘贴 DNA/RNA/蛋白质序列，一键分析。支持 ATCG/ATCGU 和标准氨基酸代号。</p><div class="toolbar"><button class="btn-sm" onclick="bioGC()" style="background:var(--accent);color:#fff">GC含量</button><button class="btn-sm" onclick="bioLen()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">序列长度</button><button class="btn-sm" onclick="bioRevComp()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">反向互补</button><button class="btn-sm" onclick="bioTranscribe()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">DNA→RNA</button><button class="btn-sm" onclick="bioTranslate()" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">翻译→蛋白</button><button class="btn-sm" onclick="bioAll()" style="background:#30d158;color:#fff">一键全分析</button></div><textarea class="data-input" id="bio-seq" placeholder="粘贴序列，例如：&#10;ATGGCCATTGTAATGGGCCGCTGAAAGGGTGCCCGATAG&#10;（支持 DNA/RNA/蛋白质，大小写均可，自动去空白）" style="height:120px"></textarea><div class="seq-output" id="bio-result" style="display:none"></div></div><div class="tool-help"><h4>📖 使用说明</h4><p><strong>支持序列类型</strong></p><p>• DNA（ATCG）<br>• RNA（AUCG）<br>• 蛋白质（氨基酸）</p><p><strong>功能介绍</strong></p><p>• GC含量：计算 GC%<br>• 反向互补：DNA 互补链<br>• DNA→RNA：T→U 转换<br>• 翻译→蛋白：标准密码子表<br>• 一键全分析：上述全部</p><p><strong>快捷键</strong></p><p>粘序列 → 点按钮 → 结果出</p></div></div>'}
 function getSeq(){return (document.getElementById('bio-seq')?.value||'').replace(/\s/g,'').toUpperCase()}function showBio(html){const r=document.getElementById('bio-result');r.style.display='block';r.innerHTML=html}
 const codonTable={'ATA':'I','ATC':'I','ATT':'I','ATG':'M','ACA':'T','ACC':'T','ACG':'T','ACT':'T','AAC':'N','AAT':'N','AAA':'K','AAG':'K','AGC':'S','AGT':'S','AGA':'R','AGG':'R','CTA':'L','CTC':'L','CTG':'L','CTT':'L','CCA':'P','CCC':'P','CCG':'P','CCT':'P','CAC':'H','CAT':'H','CAA':'Q','CAG':'Q','CGA':'R','CGC':'R','CGG':'R','CGT':'R','GTA':'V','GTC':'V','GTG':'V','GTT':'V','GCA':'A','GCC':'A','GCG':'A','GCT':'A','GAC':'D','GAT':'D','GAA':'E','GAG':'E','GGA':'G','GGC':'G','GGG':'G','GGT':'G','TCA':'S','TCC':'S','TCG':'S','TCT':'S','TTC':'F','TTT':'F','TTA':'L','TTG':'L','TAC':'Y','TAT':'Y','TAA':'*','TAG':'*','TGC':'C','TGT':'C','TGA':'*','TGG':'W'};
 function bioGC(){const s=getSeq();if(!s)return showBio('⚠ 请先粘贴序列');const gc=(s.match(/[GC]/g)||[]).length,at=(s.match(/[ATU]/g)||[]).length,total=gc+at;showBio(`<strong>GC 含量：</strong>${total>0?(gc/total*100).toFixed(1)+'%':'N/A'}（GC: ${gc}, AT: ${at}）`)}
@@ -211,7 +220,7 @@ function bioAll(){const s=getSeq();if(!s)return showBio('⚠ 请先粘贴序列'
 
 // ====== NGL 3D VIEWER ======
 let nglLoaded=false;
-function renderNGL(ct){ct.innerHTML='<p style="color:var(--text2);margin-bottom:12px">输入 PDB ID 查看蛋白质三维结构。示例：1CRN、4HHB、1BNA</p><div class="toolbar"><input id="ngl-pdb" value="1CRN" style="padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-family:inherit;font-size:.85rem;width:120px;text-transform:uppercase"><button class="btn-sm" id="ngl-load" style="background:var(--accent);color:#fff">加载结构</button><select id="ngl-style" style="padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-family:inherit;font-size:.85rem"><option value="cartoon">飘带模型</option><option value="ball+stick">球棍模型</option><option value="surface">表面模型</option><option value="backbone">骨架模型</option></select></div><div id="ngl-viewport"></div><p style="text-align:center;margin-top:8px;color:var(--text2);font-size:.82rem">🖱 拖拽旋转 · 滚轮缩放 · 右键平移</p>';
+function renderNGL(ct){ct.innerHTML='<div class="tool-with-help"><div class="tool-main"><p style="color:var(--text2);margin-bottom:12px">输入 PDB ID 查看蛋白质三维结构。示例：1CRN、4HHB、1BNA</p><div class="toolbar"><input id="ngl-pdb" value="1CRN" style="padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-family:inherit;font-size:.85rem;width:120px;text-transform:uppercase"><button class="btn-sm" id="ngl-load" style="background:var(--accent);color:#fff">加载结构</button><select id="ngl-style" style="padding:8px 16px;border-radius:20px;border:1.5px solid var(--border);font-family:inherit;font-size:.85rem"><option value="cartoon">飘带模型</option><option value="ball+stick">球棍模型</option><option value="surface">表面模型</option><option value="backbone">骨架模型</option></select></div><div id="ngl-viewport"></div><p style="text-align:center;margin-top:8px;color:var(--text2);font-size:.82rem">🖱 拖拽旋转 · 滚轮缩放 · 右键平移</p></div><div class="tool-help"><h4>📖 使用说明</h4><p><strong>数据来源</strong></p><p>从 <a href="https://www.rcsb.org" target="_blank">RCSB PDB</a> 下载蛋白质结构（PDB 格式）</p><p><strong>常用 PDB ID</strong></p><p><code>1CRN</code> 植物毒素蛋白<br><code>4HHB</code> 血红蛋白<br><code>1BNA</code> DNA 双螺旋<br><code>6VXX</code> 新冠病毒 Spike</p><p><strong>模型说明</strong></p><p>• 飘带：二级结构<br>• 球棍：原子键<br>• 表面：分子表面<br>• 骨架：Cα 主链</p></div></div>';
   loadNGL();
 }
 function loadNGL(){
@@ -246,11 +255,24 @@ function initNGLStage(){
 const clustalColors={A:'#c8c8c8',R:'#145aff',N:'#00dcdc',D:'#e60a0a',C:'#e6e600',Q:'#00dcdc',E:'#e60a0a',G:'#eb6100',H:'#8282d2',I:'#c8c8c8',L:'#c8c8c8',K:'#145aff',M:'#c8c8c8',F:'#3232aa',P:'#dc9682',S:'#00dcdc',T:'#00dcdc',W:'#b45ab4',Y:'#15b1b1',V:'#c8c8c8',B:'#c8c8c8',X:'#fff',Z:'#c8c8c8','-':'#fff'};
 function renderMSA(ct){
   ct.innerHTML=`
-    <p style="color:var(--text2);margin-bottom:12px">粘贴 FASTA 格式的已比对序列（等长），自动着色。ClustalX 配色方案。</p>
-    <textarea class="data-input" id="msa-input" placeholder=">seq1&#10;MAVGK--APL&#10;>seq2&#10;MAIGKK-APL&#10;>seq3&#10;MA-GKKLAPL&#10;（等长对齐序列，FASTA格式）" style="height:160px"></textarea>
-    <div class="toolbar"><button class="btn-sm" onclick="renderMSAView()" style="background:var(--accent);color:#fff">渲染比对</button></div>
-    <div class="msa-wrap" id="msa-display"></div>
-    <p style="color:var(--text2);font-size:.8rem;margin-top:6px">🖱 横向滚动查看更多 · 彩色标注：🔵碱性 🔴酸性 🟡极性 🟠非极性/疏水</p>
+    <div class="tool-with-help">
+      <div class="tool-main">
+        <p style="color:var(--text2);margin-bottom:8px">粘贴 FASTA 格式的已比对序列（等长），自动着色。ClustalX 配色方案。</p>
+        <textarea class="data-input" id="msa-input" placeholder=">seq1&#10;MAVGK--APL&#10;>seq2&#10;MAIGKK-APL&#10;>seq3&#10;MA-GKKLAPL&#10;（等长对齐序列，FASTA格式）" style="height:140px"></textarea>
+        <div class="toolbar"><button class="btn-sm" onclick="renderMSAView()" style="background:var(--accent);color:#fff">渲染比对</button></div>
+        <div class="msa-wrap" id="msa-display"></div>
+        <p style="color:var(--text2);font-size:.8rem;margin-top:6px">🖱 横向滚动 · 🟡极性 🔴酸性 🔵碱性 🟤疏水</p>
+      </div>
+      <div class="tool-help">
+        <h4>📖 使用说明</h4>
+        <p><strong>输入格式</strong></p>
+        <p>FASTA 格式的<strong>等长</strong>比对序列：<br><code>>名称</code> 起头<br><code>MAVGK--APL</code> 序列行</p>
+        <p><strong>配色方案</strong></p>
+        <p>ClustalX 标准<br>（Zappo/默认）</p>
+        <p>• <span style="color:#145aff">碱性 (KRH)</span><br>• <span style="color:#e60a0a">酸性 (DE)</span><br>• <span style="color:#00dcdc">极性 (NQST)</span><br>• <span style="color:#eb6100">甘氨酸</span></p>
+        <p>底部 <strong>Consensus</strong> 行显示 >50% 一致位点</p>
+      </div>
+    </div>
   `;
 }
 function renderMSAView(){
@@ -290,79 +312,167 @@ function renderMSAView(){
 
 // ====== PHYLOCANVAS ======
 let phyloLoaded=false;
+// ====== PHYLOCANVAS REPLACED WITH CUSTOM CANVAS ======
 function renderPhylo(ct){
   ct.innerHTML=`
-    <p style="color:var(--text2);margin-bottom:8px">输入 Newick 格式进化树。参考 MEGA 风格，支持矩形/圆形/辐射/对角线四种树形、有根/无根切换。</p>
-    <textarea class="data-input" id="phylo-input" placeholder="Newick 格式，例如：(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);&#10;支持叶节点名称和分支长度" style="height:70px">(Human:0.05,Chimp:0.03,(Mouse:0.2,Rat:0.15):0.1,Fish:0.4);</textarea>
-    <div class="toolbar">
-      <select id="phylo-type"><option value="rectangular" selected>矩形</option><option value="circular">圆形</option><option value="radial">辐射</option><option value="diagonal">对角线</option></select>
-      <select id="phylo-root"><option value="rooted" selected>有根树</option><option value="unrooted">无根树</option></select>
-      <label style="font-size:.85rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:4px"><input type="checkbox" id="phylo-labels" checked> 显示标签</label>
-      <label style="font-size:.85rem;color:var(--text);cursor:pointer;display:flex;align-items:center;gap:4px"><input type="checkbox" id="phylo-scale" checked> 标尺</label>
-      <button class="btn-sm" id="phylo-render" style="background:var(--accent);color:#fff">渲染</button>
-      <button class="btn-sm" id="phylo-export" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">导出PNG</button>
+    <div class="tool-with-help">
+      <div class="tool-main">
+        <p style="color:var(--text2);margin-bottom:8px">输入 Newick 格式进化树。自研 Canvas 渲染，支持矩形/圆形两态，滚轮缩放+拖拽平移。</p>
+        <textarea class="data-input" id="phylo-input" style="height:70px">(Human:0.05,Chimp:0.03,(Mouse:0.2,Rat:0.15):0.1,Fish:0.4);</textarea>
+        <div class="toolbar">
+          <select id="phylo-type"><option value="rect">矩形</option><option value="circ">圆形</option></select>
+          <button class="btn-sm" id="phylo-render" style="background:var(--accent);color:#fff">渲染</button>
+          <button class="btn-sm" id="phylo-export" style="border:1.5px solid var(--accent);color:var(--accent);background:transparent">导出PNG</button>
+          <button class="btn-sm" id="phylo-reset" style="border:1.5px solid var(--border);color:var(--text);background:transparent">重置视野</button>
+        </div>
+        <canvas id="phylo-cv" width="800" height="420" style="width:100%;border-radius:var(--radius-sm);border:1px solid var(--border);background:#fafafa"></canvas>
+      </div>
+      <div class="tool-help">
+        <h4>📖 使用说明</h4>
+        <p><strong>输入格式</strong></p>
+        <p>Newick 标准格式：<br><code>(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);</code></p>
+        <p>叶节点用名称+<code>:长度</code>表示，内部节点可命名。</p>
+        <p><strong>参数说明</strong></p>
+        <p>• <span class="tag">矩形</span> 水平分支，根在左，叶在右</p>
+        <p>• <span class="tag">圆形</span> 辐射状，中心为根</p>
+        <p><strong>交互操作</strong></p>
+        <p>🖱 拖拽平移</p>
+        <p>🔍 滚轮缩放</p>
+        <p>📥 导出 PNG 图片</p>
+      </div>
     </div>
-    <div id="phylo-canvas"></div>
   `;
-  loadPhylo();
+  initPhyloCustom();
 }
-function loadPhylo(){
-  if(window.Phylocanvas){initPhylo();return}
-  const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/phylocanvas@2.8.1/dist/phylocanvas.min.js';
-  s.onload=()=>{phyloLoaded=true;initPhylo()};
-  document.head.appendChild(s);
-}
-function initPhylo(){
-  const treeDiv=document.getElementById('phylo-canvas');if(!treeDiv)return;
-  treeDiv.innerHTML='';
-  if(cleanups.phyloTree){try{cleanups.phyloTree()}catch(e){}}
-  let tree=null;
-  function createTree(newick){
-    if(tree){try{tree.destroy()}catch(e){}}
-    const type=document.getElementById('phylo-type')?.value||'rectangular';
-    const rooted=document.getElementById('phylo-root')?.value==='rooted';
-    const showLabels=document.getElementById('phylo-labels')?.checked!==false;
-    const showScale=document.getElementById('phylo-scale')?.checked!==false;
-    tree=new Phylocanvas.Tree('phylo-canvas',{
-      source:newick,
-      showLabels:showLabels,showScaleBar:showScale,nodeSize:18,
-      padding:20,alignLabels:true,
-      styles:{branch:{lineWidth:2,strokeStyle:'#0071e3'},leaf:{fillStyle:'#30d158'}}
-    });
-    tree.on('loaded',()=>tree.fitInPanel());
-    tree.on('error',()=>alert('解析失败，请检查 Newick 格式是否正确'));
-    return tree;
+let phyloData=null,phyloPan={x:0,y:0},phyloZoom=1;
+function initPhyloCustom(){
+  const cv=document.getElementById('phylo-cv');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  function parseNewick(str){
+    str=str.replace(/\s/g,'').replace(/;$/,'');if(!str)throw new Error('空输入');
+    let i=0;
+    function parse(){
+      let name='',length=0,children=[];
+      if(str[i]==='('){
+        i++;
+        while(i<str.length&&str[i]!==')'){children.push(parse());if(str[i]===',')i++;}
+        if(str[i]!==')')throw new Error('缺少右括号 at '+i);
+        i++;
+      }
+      while(i<str.length&&/[a-zA-Z0-9_.\-]/.test(str[i])){name+=str[i];i++}
+      if(str[i]===':'){i++;let s='';while(i<str.length&&/[\d.eE+\-]/.test(str[i])){s+=str[i];i++}length=parseFloat(s)||0}
+      return{name,length,children};
+    }
+    const t=parse();if(i<str.length&&str[i]!==','&&str[i]!==')'&&str[i]!==';')throw new Error('多余字符 at '+i);
+    return t;
   }
-  const defaultSrc=document.getElementById('phylo-input')?.value||'(Human:0.05,Chimp:0.03,(Mouse:0.2,Rat:0.15):0.1,Fish:0.4);';
-  createTree(defaultSrc);
+  function countLeaves(n){return n.children.length?n.children.reduce((s,c)=>s+countLeaves(c),0):1}
+  function getMaxDepth(n,d){let mx=d;for(const c of n.children){mx=Math.max(mx,getMaxDepth(c,d+1))}return mx}
+  function draw(){
+    cv.width=cv.offsetWidth;cv.height=420;
+    ctx.clearRect(0,0,cv.width,cv.height);ctx.save();
+    ctx.translate(-phyloPan.x,-phyloPan.y);ctx.scale(phyloZoom,phyloZoom);
+    try{
+      if(!phyloData)phyloData=parseNewick(document.getElementById('phylo-input')?.value||'(A:0.1,B:0.2,(C:0.3,D:0.4):0.5);');
+      const type=document.getElementById('phylo-type')?.value||'rect';
+      layoutTree(phyloData);
+      if(type==='rect')drawRect(phyloData);else drawCirc(phyloData);
+    }catch(e){ctx.fillStyle='#ff3b30';ctx.font='15px sans-serif';ctx.fillText('解析失败: '+e.message,20,30)}
+    ctx.restore();
+  }
+  function layoutTree(root){
+    const leafGap=32;
+    function setY(n,y0){
+      if(!n.children.length){n._y=y0+leafGap/2;return y0+leafGap}
+      let y=y0;for(const c of n.children)y=setY(c,y);n._y=(n.children[0]._y+n.children[n.children.length-1]._y)/2;return y
+    }
+    setY(root,10);
+    const maxD=getMaxDepth(root,0)||1;
+    function setX(n,d){n._x=60+d*120;for(const c of n.children)setX(c,d+1)}
+    setX(root,0);
+  }
+  function drawRect(n){
+    ctx.strokeStyle='#0071e3';ctx.lineWidth=2;ctx.fillStyle='#1d1d1f';ctx.font='14px sans-serif';
+    function drawNode(n){
+      for(const c of n.children){
+        ctx.beginPath();ctx.moveTo(n._x,n._y);ctx.lineTo(n._x,c._y);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(n._x,c._y);ctx.lineTo(c._x,c._y);ctx.stroke();
+        drawNode(c);
+      }
+      if(!n.children.length){ctx.fillStyle='#30d158';ctx.beginPath();ctx.arc(n._x,n._y,6,0,Math.PI*2);ctx.fill();ctx.fillStyle='#1d1d1f';ctx.fillText(n.name||'?',n._x+12,n._y+5)}
+    }
+    ctx.fillStyle='#ff9500';ctx.beginPath();ctx.arc(root._x,root._y,6,0,Math.PI*2);ctx.fill();
+    drawNode(root);
+  }
+  function drawCirc(root){
+    const cx=400,cy=250,r=Math.max(countLeaves(root)*22,200);
+    function setAngle(n,start,end){
+      const leafCount=n.children.reduce((s,c)=>s+countLeaves(c),0)||1;
+      let a=start;
+      for(const c of n.children){
+        const frac=countLeaves(c)/leafCount,span=(end-start)*frac;
+        setAngle(c,a,a+span);a+=span;
+      }
+      n._angle=(start+end)/2;n._rad=n.children.length?r*(1-n._x/root._x):r;
+    }
+    setAngle(root,0,Math.PI*2);
+    function toXY(n){n._cx=cx+Math.cos(n._angle-Math.PI/2)*n._rad;n._cy=cy+Math.sin(n._angle-Math.PI/2)*n._rad}
+    toXY(root);const setXY=(n)=>{for(const c of n.children){c._rad=root._x?r*(1-c._x/root._x):r*0.5;c._cx=cx+Math.cos(c._angle-Math.PI/2)*c._rad;c._cy=cy+Math.sin(c._angle-Math.PI/2)*c._rad;setXY(c)}};setXY(root);
+    ctx.strokeStyle='#0071e3';ctx.lineWidth=1.5;ctx.fillStyle='#1d1d1f';ctx.font='12px sans-serif';
+    (function drawNodes(n){
+      for(const c of n.children){
+        ctx.beginPath();ctx.moveTo(n._cx,n._cy);ctx.lineTo(c._cx,c._cy);ctx.stroke();
+        drawNodes(c);
+      }
+      ctx.fillStyle=n.children.length?'#ff9500':'#30d158';
+      ctx.beginPath();ctx.arc(n._cx,n._cy,n.children.length?4:5,0,Math.PI*2);ctx.fill();
+      if(!n.children.length||n.name){
+        const a=n._angle-Math.PI/2,off=n.children.length?16:10;
+        ctx.fillStyle='#1d1d1f';ctx.fillText(n.name,(n._cx+Math.cos(a)*off)+5,(n._cy+Math.sin(a)*off)+4);
+      }
+    })(root);
+  }
   document.getElementById('phylo-render').addEventListener('click',()=>{
-    const src=document.getElementById('phylo-input')?.value.trim();
-    if(!src)return alert('请先输入 Newick 格式');
-    createTree(src);
+    phyloData=null;phyloPan={x:0,y:0};phyloZoom=1;draw();
   });
-  ['phylo-type','phylo-root','phylo-labels','phylo-scale'].forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    el.addEventListener('change',()=>{
-      const src=document.getElementById('phylo-input')?.value.trim()||defaultSrc;
-      createTree(src);
-    });
-  });
+  document.getElementById('phylo-type').addEventListener('change',draw);
+  document.getElementById('phylo-reset').addEventListener('click',()=>{phyloPan={x:0,y:0};phyloZoom=1;draw()});
   document.getElementById('phylo-export').addEventListener('click',()=>{
-    if(!tree)return;
-    tree.exportImage({format:'png'}).then(url=>{const a=document.createElement('a');a.href=url;a.download='phylo-tree.png';a.click()}).catch(()=>alert('导出失败'));
+    const l=cv.toDataURL('image/png'),a=document.createElement('a');a.href=l;a.download='phylo-tree.png';a.click();
   });
-  cleanups.phyloTree=()=>{try{tree.destroy()}catch(e){}};
+  let dragging=false,lastX,lastY;
+  cv.addEventListener('mousedown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY});
+  cv.addEventListener('mousemove',e=>{if(dragging){phyloPan.x+=lastX-e.clientX;phyloPan.y+=lastY-e.clientY;lastX=e.clientX;lastY=e.clientY;draw()}});
+  cv.addEventListener('mouseup',()=>dragging=false);
+  cv.addEventListener('mouseleave',()=>dragging=false);
+  cv.addEventListener('wheel',e=>{e.preventDefault();const ds=e.deltaY>0?0.9:1.1;phyloZoom=Math.max(0.2,Math.min(5,phyloZoom*ds));draw()},{passive:false});
+  draw();
+  cleanups.phyloCustom=()=>{phyloData=null};
 }
 
 // ====== VOLCANO PLOT ======
 let volcChart=null;
 function renderVolcano(ct){
   ct.innerHTML=`
-    <p style="color:var(--text2);margin-bottom:12px">粘贴差异表达数据（gene, log2FC, pvalue），自动绘制火山图。|log2FC|>1 且 p<0.05 标色。</p>
-    <textarea class="data-input" id="volc-input" placeholder="gene,log2FC,pvalue" style="height:120px"></textarea>
-    <div class="toolbar"><button class="btn-sm" onclick="drawVolcano()" style="background:var(--accent);color:#fff">绘制火山图</button></div>
-    <div class="volc-wrap"><canvas id="volc-chart"></canvas></div>
-    <p style="color:var(--text2);font-size:.8rem;margin-top:6px">🔴 up（上调） 🔵 nodiff（无差异） 🟡 down（下调）</p>
+    <div class="tool-with-help">
+      <div class="tool-main">
+        <p style="color:var(--text2);margin-bottom:8px">粘贴差异表达数据（gene, log2FC, pvalue），自动绘制火山图。|log2FC|>1 且 p<0.05 标色。</p>
+        <textarea class="data-input" id="volc-input" placeholder="gene,log2FC,pvalue" style="height:100px"></textarea>
+        <div class="toolbar"><button class="btn-sm" onclick="drawVolcano()" style="background:var(--accent);color:#fff">绘制火山图</button></div>
+        <div class="volc-wrap"><canvas id="volc-chart"></canvas></div>
+      </div>
+      <div class="tool-help">
+        <h4>📖 使用说明</h4>
+        <p><strong>数据格式</strong></p>
+        <p>逗号/Tab 分隔，3 列无表头：<br><code>gene,log2FC,pvalue</code><br><code>GeneA,2.5,0.001</code></p>
+        <p><strong>筛选标准</strong></p>
+        <p>• <span class="tag">FC>1</span> 且 <span class="tag">p<0.05</span> → up（红）</p>
+        <p>• <span class="tag">FC<-1</span> 且 <span class="tag">p<0.05</span> → down（橙）</p>
+        <p>• 其余 → nodiff（蓝）</p>
+        <p><strong>参考来源</strong></p>
+        <p>参见 bioinformatics.com.cn<br>SRplot Enhanced Volcano</p>
+      </div>
+    </div>
   `;
   // Generate 1000 sample genes with proper volcano distribution
   const ta=document.getElementById('volc-input');
